@@ -35,7 +35,7 @@ $q = mysqli_query($conn, "SELECT * FROM berita WHERE status='dipublikasikan' ORD
 </div>
       <!-- Tengah -->
       <div class="center">
-        <img src="logo.jpg" class="logo-img">
+        <img src="Gambar/logo-berita.png" class="logo-img">
         <p class="tagline">PORTAL BERITA TERPERCAYA UNTUK SURABAYA</p>
       </div>
       <!-- Kanan -->
@@ -63,7 +63,7 @@ $q = mysqli_query($conn, "SELECT * FROM berita WHERE status='dipublikasikan' ORD
     <main class="main-content">
       <!-- Featured -->
       <article class="featured-article">
-        <img src="Tari-Gending.jpg">
+        <img src="Gambar/Tari-Gending.jpg">
         <div class="featured-content">
           <span class="category-tag">CULTURE</span>
            <h1><a href="detail-isi-berita.html" target="_self" class="featured-title">Budaya Indonesia Pukau Dunia, Tari Gending Sriwijaya Sedot Perhatian di Osaka</a></h1>
@@ -75,7 +75,7 @@ $q = mysqli_query($conn, "SELECT * FROM berita WHERE status='dipublikasikan' ORD
       <div class="articles-grid">
         <!-- Card 1 -->
         <article class="article-card">
-          <img src="Kereta-SRRL.webp" alt="Construction Project" class="article-image">
+          <img src="Gambar/Kereta-SRRL.webp" alt="Construction Project" class="article-image">
           <div class="article-content">
             <span class="category-tag">NEWS</span>
             <h2 class="article-title">Bangun Mega Proyek Kereta SRRL Surabaya-Sidoarjo, Kemenhub Pakai Dana Pinjaman Jerman Rp4,2 T</h2>
@@ -85,7 +85,7 @@ $q = mysqli_query($conn, "SELECT * FROM berita WHERE status='dipublikasikan' ORD
 
         <!-- Card 2 -->
         <article class="article-card">
-          <img src="Bank Indo.jpg" alt="Bank Meeting" class="article-image">
+          <img src="Gambar/Bank Indo.jpg" alt="Bank Meeting" class="article-image">
           <div class="article-content">
             <span class="category-tag">ECONOMY</span>
             <h2 class="article-title">Bank-Bank Bingung Serap Dana Rp200 Triliun dari Pemerintah, Hanya Sanggup Rp7 Triliun?</h2>
@@ -95,7 +95,7 @@ $q = mysqli_query($conn, "SELECT * FROM berita WHERE status='dipublikasikan' ORD
 
         <!-- Card 3 -->
         <article class="article-card">
-          <img src="Wisata-Edelweis.jpg" alt="Edelweiss Flower" class="article-image">
+          <img src="Gambar/Wisata-Edelweis.jpg" alt="Edelweiss Flower" class="article-image">
           <div class="article-content">
             <span class="category-tag">LIFESTYLE</span>
             <h2 class="article-title">Pesona Wisata Edelweiss Wonokitri, Lokasi dengan Cerita Tak Terlupakan Bagi Mahasiswa UI</h2>
@@ -105,7 +105,7 @@ $q = mysqli_query($conn, "SELECT * FROM berita WHERE status='dipublikasikan' ORD
 
         <!-- Card 4 -->
         <article class="article-card">
-          <img src="Badminton Prada BC.webp" alt="Badminton Team" class="article-image">
+          <img src="Gambar/Badminton Prada BC.webp" alt="Badminton Team" class="article-image">
           <div class="article-content">
             <span class="category-tag">SPORTS</span>
             <h2 class="article-title">Prestasi Membanggakan Prada BC di Tengah Dominasi Klub Bulutangkis Raksasa</h2>
@@ -115,7 +115,7 @@ $q = mysqli_query($conn, "SELECT * FROM berita WHERE status='dipublikasikan' ORD
 
         <!-- Card 5 -->
         <article class="article-card">
-          <img src="Perang-Gaza.jpg" alt="Gaza Conflict" class="article-image">
+          <img src="Gambar/Perang-Gaza.jpg" alt="Gaza Conflict" class="article-image">
           <div class="article-content">
             <span class="category-tag">WORLD</span>
             <h2 class="article-title">Israel Jangkau 200.000 Warga Palestina Tewas-Luka Selama Perang Gaza</h2>
@@ -125,7 +125,7 @@ $q = mysqli_query($conn, "SELECT * FROM berita WHERE status='dipublikasikan' ORD
 
         <!-- Card 6 -->
         <article class="article-card">
-          <img src="Fashion-Show.webp" alt="Fashion Show" class="article-image">
+          <img src="Gambar/Fashion-Show.webp" alt="Fashion Show" class="article-image">
           <div class="article-content">
             <span class="category-tag">FASHION</span>
             <h2 class="article-title">Fashion Show Vastra Jiva Tutup FESyar Jawa 2025 Bank Indonesia Jatim</h2>
@@ -197,7 +197,7 @@ $q = mysqli_query($conn, "SELECT * FROM berita WHERE status='dipublikasikan' ORD
   <footer class="footer">
     <div class="footer-container">
       <div class="footer-logo">
-        <img src="logo-berita.png" alt="logo-berita" class="footer-logo-img">
+        <img src="Gambar/logo-berita.png" alt="logo-berita" class="footer-logo-img">
       </div>
       <div class="footer-links">
         <h4>QUICK LINKS</h4>
@@ -214,9 +214,9 @@ $q = mysqli_query($conn, "SELECT * FROM berita WHERE status='dipublikasikan' ORD
       <div class="footer-social">
         <h4>FOLLOW US</h4>
         <div class="social-links">
-          <a href="#"> <img src="logo-ig.png" alt="logo-ig"></a>
-          <a href="#"> <img src="logo-x.webp" alt="logo-x"></a>
-          <a href="#"> <img src="logo-linkedin.png" alt="logo-linkedin"></a>
+          <a href="#"> <img src="Gambar/logo-ig.png" alt="logo-ig"></a>
+          <a href="#"> <img src="Gambar/logo-x.webp" alt="logo-x"></a>
+          <a href="#"> <img src="Gambar/logo-linkedin.png" alt="logo-linkedin"></a>
         </div>
       </div>
     </div>
