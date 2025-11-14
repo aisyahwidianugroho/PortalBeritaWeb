@@ -1,7 +1,16 @@
 <?php
 include 'koneksi.php';
 
-$q = mysqli_query($conn, "SELECT * FROM berita WHERE status='dipublikasikan' ORDER BY id_berita DESC");
+// ✅ perbaikan: pastikan koneksi aman & tabelnya benar
+if (!$conn) {
+    die("Koneksi gagal: " . mysqli_connect_error());
+}
+
+// ✅ ambil data dari tabel berita2 (bukan berita) — sesuaikan dengan CMS kamu
+$q = mysqli_query($conn, "SELECT * FROM berita2 WHERE status='dipublikasikan' ORDER BY id_berita DESC");
+
+// kalau mau tes, bisa uncomment ini sementara:
+// if (!$q) { echo mysqli_error($conn); }
 ?>
 
 <!DOCTYPE html>

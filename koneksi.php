@@ -1,16 +1,12 @@
 <?php
-$servername = "localhost"; // Nama host server
-$username   = "root";      // Username database
-$password   = "";          // Password database (kosong di XAMPP)
-$dbname     = "datab_inews"; // Nama database kamu di phpMyAdmin
+// koneksi.php
+$host = 'localhost';
+$user = 'root';
+$pass = '';
+$db   = 'portal_berita'; // ganti sesuai nama database kamu
 
-// Membuat koneksi
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Cek koneksi
-if ($conn->connect_error) {
-    die("Koneksi gagal: " . $conn->connect_error);
-} else {
-    echo "Koneksi berhasil!";
+$conn = mysqli_connect($host, $user, $pass, $db);
+if (!$conn) {
+  die('Koneksi gagal: ' . mysqli_connect_error());
 }
-?>
+mysqli_set_charset($conn, 'utf8mb4');

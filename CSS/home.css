@@ -1,0 +1,387 @@
+/* ========== RESET & BASE ========== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 60px;
+  left: 20px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  z-index: 1000;
+  flex-direction: column;
+  width: 140px;
+  overflow: hidden;
+}
+
+.dropdown-menu a {
+  padding: 10px 14px;
+  display: block;
+  color: #333;
+  text-decoration: none;
+  font-size: 15px;
+  border-bottom: 1px solid #eee;
+  transition: background 0.2s;
+}
+
+.dropdown-menu a:hover {
+  background-color: #f4f4f4;
+}
+
+/* Tampilkan menu ketika aktif */
+.dropdown-menu.show {
+  display: flex;
+}
+
+/* Tombol menu */
+.menu-btn {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  line-height: 1.6;
+  color: #222;
+  background: #f9f9f9;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+/* ========== HEADER ========== */
+.header {
+  background: #fff;
+  border-bottom: 2px solid #ddd;
+  text-align: center;
+}
+
+.header-top {
+  background: #ffffff;
+  color: #605e5e;
+  text-align: center;
+  font-size: 14px;
+  padding: 6px;
+}
+
+.header-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 12px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-main .left,
+.header-main .center,
+.header-main .right {
+  display: flex;
+  align-items: center;
+}
+
+.menu-btn {
+  font-size: 22px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.weather {
+  font-size: 14px;
+  color: #555;
+}
+
+.center {
+  flex-direction: column;
+  text-align: center;
+}
+
+.logo-img {
+  max-height: 60px;
+  margin-bottom: 5px;
+}
+
+.tagline {
+  font-size: 13px;
+  color: #666;
+  font-style: italic;
+}
+
+.user-profile {
+  font-size: 14px;
+  color: #444;
+}
+
+/* ========== NAVIGATION ========== */
+.nav {
+  background: #ffffff;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding: 12px 0;
+}
+
+.nav-links a {
+  color: #040404;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.nav-links a:hover {
+  color: #ff0000;
+}
+
+/* ========== LAYOUT ========== */
+.main-container {
+  max-width: 1200px;
+  margin: 20px auto; /* ini memastikan konten di tengah */
+  display: flex;
+  gap: 20px;
+  padding: 0 20px;
+}
+
+.main-content {
+  flex: 3;
+}
+
+.sidebar {
+  flex: 1;
+}
+
+/* ========== FEATURED ARTICLE ========== */
+.featured-article {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  text-align: justify;
+}
+
+.featured-article img {
+  width: 100%;
+  display: block;
+}
+
+.featured-content {
+  padding: 15px;
+}
+
+.category-tag {
+  display: inline-block;
+  background: #d71920;
+  color: #fff;
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.featured-title {
+  font-size: 20px;
+  margin-bottom: 8px;
+  color: #111;
+}
+
+.featured-excerpt {
+  font-size: 14px;
+  color: #555;
+}
+
+/* ========== ARTICLES GRID ========== */
+.articles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.article-card {
+  background: #fff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  text-align: justify;
+}
+
+.article-card img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+}
+
+.article-content {
+  padding: 12px;
+}
+
+.article-title {
+  font-size: 16px;
+  margin: 8px 0;
+  color: #111;
+}
+
+.article-excerpt {
+  font-size: 13px;
+  color: #666;
+}
+
+/* ========== SIDEBAR ========== */
+.search-box {
+  margin-bottom: 20px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+}
+
+.news-section {
+  background: #fff;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.section-title {
+  font-size: 18px;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #d71920;
+  padding-bottom: 6px;
+}
+
+.news-item {
+  margin-bottom: 12px;
+  text-align: justify;
+}
+
+.news-item h3 {
+  font-size: 15px;
+  margin-bottom: 4px;
+  color: #111;
+}
+
+.news-item p {
+  font-size: 13px;
+  color: #555;
+}
+
+/* FOOTER */
+.footer {
+  background: #f1f1f1;
+  padding: 30px 20px 15px;
+  margin-top: 40px;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.footer-logo {
+  display: flex;
+  align-items: flex-start;      /* posisikan sedikit naik */
+  justify-content: center;
+  margin-top: -10px;            /* dorong logo ke atas */
+}
+
+.footer-logo-img {
+  width: 260px;                 /* perbesar ukuran logo */
+  height: auto;
+  object-fit: contain;
+  transform: translateY(-5px);  /* sedikit naik */
+  filter: brightness(0.95);
+  transition: transform 0.3s ease, filter 0.3s ease;
+}
+
+.footer-logo-img:hover {
+  transform: scale(1.08) translateY(-5px);
+  filter: brightness(1);
+}
+
+/* QUICK LINKS */
+.footer-links h4 {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  color: #333;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(2, auto); /* ✅ bikin dua kolom */
+  gap: 6px 20px; /* jarak antar item */
+}
+
+.footer-links ul li a {
+  color: #555;
+  text-decoration: none;
+  font-size: 13px;
+  transition: 0.3s;
+}
+
+.footer-links ul li a:hover {
+  color: #e74c3c;
+}
+
+/* FOLLOW US (perbaikan ikon sosial media) */
+.footer-social {
+  text-align: left;
+}
+
+.social-links {
+  display: flex;
+  align-items: center;       /* sejajarkan ikon secara vertikal */
+  justify-content: flex-start;
+  gap: 12px;                 /* jarak antar logo */
+}
+
+.social-links a img {
+  width: 26px;               /* ukuran lebar ikon */
+  height: 26px;              /* tinggi disamakan */
+  object-fit: contain;       /* jaga proporsi logo */
+  filter: grayscale(40%);    /* efek elegan sedikit abu */
+  transition: transform 0.2s, filter 0.2s;
+}
+
+.social-links a img:hover {
+  transform: scale(1.15);    /* efek zoom saat hover */
+  filter: grayscale(0%);
+}
+
+.copyright {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 12px;
+  color: #777;
+}

@@ -1,0 +1,57 @@
+:root {
+  --primary: #2c3e50;
+  --secondary: #3498db;
+  --light: #ecf0f1;
+  --dark: #2c3e50;
+  --gray: #95a5a6;
+  --jurnalis: #3498db;
+  --editor: #9b59b6;
+  --admin: #e74c3c;
+}
+
+/* Reset ringkas & body khusus halaman login */
+* { margin:0; padding:0; box-sizing:border-box; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+body { background:#f5f7fa; min-height:100vh; }
+
+/* --- Login Layout --- */
+.login-container {
+  background: linear-gradient(135deg,#667eea 0%,#764ba2 100%);
+  display:flex; justify-content:center; align-items:center;
+  min-height:100vh; padding:20px;
+}
+.login-box {
+  width:100%; max-width:400px; background:white; border-radius:10px;
+  box-shadow:0 15px 30px rgba(0,0,0,.2); overflow:hidden;
+}
+.login-header { background-color:var(--primary); color:white; padding:25px; text-align:center; }
+.login-header h1 { font-size:1.8rem; margin-bottom:5px; }
+.login-body { padding:25px; }
+
+/* --- Form --- */
+.form-group { margin-bottom:20px; }
+.form-group label { display:block; margin-bottom:8px; font-weight:600; color:var(--dark); }
+.form-control {
+  width:100%; padding:12px 15px; border:1px solid #ddd; border-radius:4px; font-size:1rem; transition:.3s;
+}
+.form-control:focus { border-color:var(--secondary); outline:none; box-shadow:0 0 0 3px rgba(52,152,219,.2); }
+
+/* --- Role selector --- */
+.role-selector { display:flex; gap:10px; margin-bottom:20px; }
+.role-option {
+  flex:1; text-align:center; padding:12px; border:2px solid #ddd; border-radius:4px; cursor:pointer; transition:.3s;
+}
+.role-option.active { border-color:var(--secondary); background-color:rgba(52,152,219,.1); }
+.role-option.jurnalis.active { border-color:var(--jurnalis); background-color:rgba(52,152,219,.1); }
+.role-option.editor.active   { border-color:var(--editor);  background-color:rgba(155,89,182,.1); }
+.role-option.admin.active    { border-color:var(--admin);   background-color:rgba(231,76,60,.1); }
+.role-icon { font-size:1.2rem; margin-bottom:5px; }
+.role-name { font-weight:600; font-size:.8rem; }
+
+/* --- Buttons --- */
+.btn { padding:12px; border:none; border-radius:4px; cursor:pointer; font-weight:600; font-size:1rem; transition:.3s; }
+.btn-login { width:100%; background-color:var(--secondary); color:white; }
+.btn-login:hover { background-color:#2980b9; }
+
+/* --- Kotak info akun demo --- */
+.login-info-box { margin-top:20px; padding:15px; background:#f8f9fa; border-radius:4px; }
+.login-info-box h4 { margin-bottom:10px; color:var(--primary); }
