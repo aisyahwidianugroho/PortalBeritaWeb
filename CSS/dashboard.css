@@ -210,4 +210,27 @@ body.role-admin   { --role-color:#e74c3c; }  /* merah */
 
 .btn-unpublish:hover {
     background: #d4a90e;
+<<<<<<< HEAD
 }
+=======
+}
+
+.badge-role, .badge-status {
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: capitalize;
+}
+
+/* ROLE COLORS */
+.badge-role.admin { background:#2c82f6; color:white; }
+.badge-role.editor { background:#f6a62c; color:white; }
+.badge-role.jurnalis { background:#2cd17e; color:white; }
+
+/* STATUS COLORS */
+.badge-status.active { background:#2ecc71; color:white; }
+.badge-status.inactive { background:#e74c3c; color:white; }
+
+
+>>>>>>> 33c3ba567ce62ec582fc27cae2365cbac703135f
