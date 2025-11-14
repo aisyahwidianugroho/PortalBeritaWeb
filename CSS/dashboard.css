@@ -164,3 +164,50 @@ body.role-admin   { --role-color:#e74c3c; }  /* merah */
 
 .card .card-header h3{ display:flex; align-items:center; gap:10px; }
 
+/* ===== BUTTON STYLE ===== */
+.btn {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 6px;
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.2s ease-in-out;
+}
+
+/* Publish Button */
+.btn-publish {
+    background: #3498db;
+    color: #fff;
+}
+
+.btn-publish:hover {
+    background: #2d82bd;
+}
+
+/* Delete Button */
+.btn-delete {
+    background: #e74c3c;
+    color: #fff;
+    margin-left: 6px;
+}
+
+.btn-delete:hover {
+    background: #cf3d2d;
+}
+
+/* Table spacing fix */
+.table td {
+    padding: 12px 15px;
+    vertical-align: middle;
+}
+
+.btn-unpublish {
+    background: #f1c40f;
+    color: #fff;
+    margin-right: 6px;
+}
+
+.btn-unpublish:hover {
+    background: #d4a90e;
+}
