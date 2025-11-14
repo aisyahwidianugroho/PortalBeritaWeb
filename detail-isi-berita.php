@@ -1,10 +1,32 @@
+<?php
+include "koneksi.php";
+
+// Ambil ID artikel dari URL
+$id_artikel = $_GET['id'] ?? 0;
+
+// Query artikel
+$sql = "SELECT a.*, c.nama_kategori 
+        FROM articles a
+        LEFT JOIN categories c ON a.id_kategori = c.id
+        WHERE a.id = $id_artikel";
+
+$artikel = mysqli_query($conn, $sql);
+$data = mysqli_fetch_assoc($artikel);
+
+// Jika artikel tidak ditemukan
+if (!$data) {
+    echo "Artikel tidak ditemukan.";
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Budaya Indonesia Pukau Dunia</title>
-  <link rel="stylesheet" href="detail-isi-berita.css">
+  <link rel="stylesheet" href="CSS/detail-isi-berita.css">
   <script src="detail-isi-berita.js"></script>
 </head>
 <body>
@@ -60,33 +82,15 @@
   <main>
   <!-- Artikel utama -->
   <article class="content">
-    <p class="tag">CULTURE</p>
-    <h2>Budaya Indonesia Pukau Dunia, Tari Gending Sriwijaya Sedot Perhatian di Osaka</h2>
-    <p class="date">Senin, 15 September 2025</p>
+    <p class="tag"><?= strtoupper($data['nama_kategori']) ?></p>
+    <h2><?= htmlspecialchars($data['judul']) ?></h2>
+    <p class="date"><?= $data['tanggal_dibuat'] ?></p>
 
-    <p>
-      OSAKA, theSurabayaNews.id – Warisan budaya Indonesia kembali mencuri perhatian dunia. 
-      Melalui komunitas tari AntarSukha, kekayaan tradisi Nusantara dipentaskan penuh warna di ajang Osaka Expo 2025 Jepang. 
-      Pertunjukan ini menjadi bukti nyata bagaimana seni tari Indonesia mampu menjadi bahasa universal yang menghubungkan bangsa-bangsa.
-    </p>
+    <p><?= nl2br($data['konten']) ?></p>
 
-    <img src="Gambar/Tari-Gending.jpg" alt="Tari Gending Sriwijaya">
+    <img src="<?= $data['gambar_sampul'] ?>" alt="Gambar Artikel">
 
-    <p>
-      AntarSukha menampilkan deretan tarian tradisional dari berbagai daerah, mulai dari Tari Gending Sriwijaya yang anggun dari Sumatera Selatan, Golek Langen Puspitasari khas Yogyakarta, gerakan energik Tari Tor Tor Tandok asal Sumatera Utara, hingga Goyang Kanan Kiri dari Nusa Tenggara Timur. Semua tarian tersebut diperindah dengan kostum berwarna-warni, aksesori etnik, dan koreografi yang sarat makna filosofis, membuat penonton terpukau.
-    </p>
-<br>
-    <p>
-      Pendiri AntarSukha, Emira Oepangat, menyebut partisipasi dalam pameran dunia ini bukan sekadar penampilan seni, melainkan juga bentuk kontribusi nyata dalam menjaga identitas bangsa.
-    </p>
-<br>
-    <p>
-      “Kegiatan ini bukan hanya pertunjukan, tapi juga cara kami memperkenalkan budaya Indonesia ke panggung global. Kami bangga mendapat sambutan hangat dari panitia dan penonton yang antusias ingin mengenal lebih dekat budaya Nusantara,” ujar Emira.
-    </p>
-<br>
-    <p>
-      Komunitas ini tidak hanya berkarya di Jepang. Sebelumnya, AntarSukha telah membawa nama Indonesia ke berbagai negara: tampil di festival budaya di Prancis dan Serbia, mendukung acara diplomatik di Belanda dan Portugal, ikut serta dalam pertukaran budaya di Penang – Malaysia, hingga meramaikan festival Muara di Esplanade Singapura.
-    </p>
+    <p><?= nl2br($data['konten2']) ?></p>
   </article>
 
   <!-- Sidebar -->
