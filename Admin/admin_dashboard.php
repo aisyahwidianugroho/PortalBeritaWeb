@@ -191,7 +191,7 @@ $menu = $_GET['menu'] ?? 'dashboard';
                    u.nama_lengkap AS pengirim
             FROM articles a
             LEFT JOIN users u ON a.id_penulis = u.id
-            WHERE a.status = 'dipublikasikan'
+            WHERE a.status = 'published'
             ORDER BY a.tanggal_publish DESC";
 
     $q = mysqli_query($conn, $sql);

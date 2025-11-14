@@ -4,10 +4,10 @@ $ACTIVE_MENU = 'edit';
 require_once __DIR__ . '/../koneksi.php';
 include __DIR__ . '/partials/editor_header.php';
 
-// ambil artikel yang sedang di-review atau di-edit
+// Ambil artikel PENDING (dari jurnalis)
 $sql = "SELECT id, judul, tanggal_dibuat, status 
         FROM articles 
-        WHERE status IN ('review', 'edit')
+        WHERE status = 'pending'
         ORDER BY tanggal_dibuat DESC";
 
 $q = mysqli_query($conn, $sql);
@@ -21,7 +21,7 @@ $q = mysqli_query($conn, $sql);
   <div class="card-body">
 
     <?php if (mysqli_num_rows($q) === 0): ?>
-        <p>Tidak ada artikel dalam proses edit.</p>
+        <p>Tidak ada artikel untuk diedit.</p>
 
     <?php else: ?>
         <table class="table">
@@ -40,11 +40,7 @@ $q = mysqli_query($conn, $sql);
                 <td><?= htmlspecialchars($row['judul']) ?></td>
 
                 <td>
-                  <?php if ($row['status'] === 'review'): ?>
-                      <span class="badge-status badge-review">Review</span>
-                  <?php elseif ($row['status'] === 'edit'): ?>
-                      <span class="badge-status badge-draft">Edit</span>
-                  <?php endif; ?>
+                    <span class="badge-status badge-pending">Pending</span>
                 </td>
 
                 <td><?= date("d M Y", strtotime($row['tanggal_dibuat'])) ?></td>

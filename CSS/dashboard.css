@@ -208,11 +208,14 @@ body.role-admin   { --role-color:#e74c3c; }  /* merah */
     margin-right: 6px;
 }
 
+.btn-unpublish {
+    background: #f1c40f;
+    color: #fff;
+    margin-right: 6px;
+}
+
 .btn-unpublish:hover {
     background: #d4a90e;
-<<<<<<< HEAD
-}
-=======
 }
 
 .badge-role, .badge-status {
@@ -231,6 +234,3 @@ body.role-admin   { --role-color:#e74c3c; }  /* merah */
 /* STATUS COLORS */
 .badge-status.active { background:#2ecc71; color:white; }
 .badge-status.inactive { background:#e74c3c; color:white; }
-
-
->>>>>>> 33c3ba567ce62ec582fc27cae2365cbac703135f
