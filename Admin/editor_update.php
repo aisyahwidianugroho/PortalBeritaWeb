@@ -39,8 +39,14 @@ if (!empty($_FILES['gambar']['name'])) {
     }
 }
 
-// ---- Status SELALU pending (editor TIDAK BOLEH publish) ----
-$status = "pending";
+// ---- Tentukan status berdasarkan tombol ----
+if (isset($_POST['kirim_admin'])) {
+    // Editor mengirim artikel ke admin untuk final review
+    $status = "menunggu_admin";
+} else {
+    // Hanya simpan perubahan, status tidak berubah
+    $status = $old['status'];
+}
 
 // ---- Update artikel ----
 $sql = "
@@ -68,7 +74,11 @@ $stmt->bind_param(
 
 $stmt->execute();
 
-// Redirect balik ke halaman editor
-header("Location: editor_edit.php?id=$id&msg=Terkirim+ke+Admin");
+// Redirect
+if (isset($_POST['kirim_admin'])) {
+    header("Location: editor_edit.php?id=$id&msg=Terkirim+ke+Admin");
+} else {
+    header("Location: editor_edit.php?id=$id&msg=Perubahan+Disimpan");
+}
 exit;
 ?>
