@@ -24,6 +24,7 @@ $menu = $_GET['menu'] ?? 'dashboard';
     <link rel="stylesheet" href="../CSS/admin_dashboard.css">
     <link rel="stylesheet" href="../CSS/dashboard.css">
 
+
     <!-- FONT AWESOME -->
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -80,10 +81,7 @@ $menu = $_GET['menu'] ?? 'dashboard';
 <main class="main">
 
     <!-- HEADER -->
-    <header class="header">
-        <h1>Halo, <?= htmlspecialchars($nama) ?></h1>
-        <div>Anda login sebagai <b>Admin</b></div>
-    </header>
+     <?php include __DIR__ . "/partials/admin_header.php"; ?>
 
     <!-- ===================== DASHBOARD (NEW LAYOUT) ===================== -->
     <?php if ($menu == 'dashboard'): ?>
