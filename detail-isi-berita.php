@@ -1,5 +1,6 @@
 <?php
 include "koneksi.php";
+session_start();
 
 // Ambil ID artikel dari URL
 $id_artikel = $_GET['id'] ?? 0;
@@ -20,7 +21,7 @@ if (!$data) {
 }
 
 // =============================================
-// POIN 1 — QUERY FIND MORE (ambil 4 artikel terbaru selain artikel ini)
+// QUERY FIND MORE — ambil 4 artikel terbaru selain artikel ini
 // =============================================
 $id_aktif = $data['id'];
 
@@ -29,6 +30,15 @@ $findMore = mysqli_query($conn, "
     WHERE status = 'published' AND id != $id_aktif
     ORDER BY tanggal_publish DESC
     LIMIT 4
+");
+
+// =============================================
+// QUERY KOMENTAR — ambil komentar artikel ini
+// =============================================
+$komentar = mysqli_query($conn, "
+    SELECT * FROM comments
+    WHERE artikel_id = $id_artikel
+    ORDER BY tanggal DESC
 ");
 ?>
 
@@ -47,7 +57,6 @@ $findMore = mysqli_query($conn, "
     <div class="header-top">SEPTEMBER 15, 2025</div>
 
     <div class="header-main">
-        <!-- Kiri -->
         <div class="left">
             <button class="menu-btn">☰</button>
             <div class="dropdown-menu">
@@ -62,13 +71,11 @@ $findMore = mysqli_query($conn, "
             <div class="weather">☀ 38° Surabaya</div>
         </div>
 
-        <!-- Tengah -->
         <div class="center">
             <img src="Gambar/logo-berita.png" class="logo-img">
             <p class="tagline">PORTAL BERITA TERPERCAYA UNTUK SURABAYA</p>
         </div>
 
-        <!-- Kanan -->
         <div class="right">
             <span>👤</span>
         </div>
@@ -119,54 +126,58 @@ $findMore = mysqli_query($conn, "
         </ul>
 
         <!-- Write Comment -->
-        <div class="write-comment">
-            <h3>Write Comment</h3>
-            <div class="comment-form">
-                <div class="avatar">👤</div>
-                <div class="form-body">
-                    <div class="user-name">aik</div>
-                    <textarea placeholder="Ketik Komentar"></textarea>
-                    <button type="submit">Post</button>
-                </div>
+<div class="write-comment">
+    <h3>Write Comment</h3>
+
+    <form action="simpan_komentar.php" method="POST" class="comment-form">
+        <div class="avatar">👤</div>
+
+        <div class="form-body">
+            <div class="user-name"><?= $_SESSION['nama'] ?? 'Guest' ?></div>
+
+            <input type="hidden" name="artikel_id" value="<?= $id_artikel ?>">
+            <input type="hidden" name="nama" value="<?= $_SESSION['nama'] ?? 'Anonymous' ?>">
+
+            <textarea name="komentar" required placeholder="Ketik Komentar"></textarea>
+
+            <button type="submit">Post</button>
+        </div>
+    </form>
+</div>
+
+
+       <?php
+$komen = mysqli_query($conn, "
+    SELECT * FROM comments 
+    WHERE artikel_id = $id_artikel AND status='approved'
+    ORDER BY tanggal DESC
+");
+?>
+
+<section class="comments">
+    <h3>Comments (<?= mysqli_num_rows($komen); ?>)</h3>
+
+    <?php if (mysqli_num_rows($komen) == 0): ?>
+        <p class="no-comment">Belum ada komentar</p>
+    <?php endif; ?>
+
+    <?php while ($k = mysqli_fetch_assoc($komen)): ?>
+        <div class="comment">
+            <div class="avatar">👤</div>
+            <div class="comment-body">
+                <span class="name"><?= htmlspecialchars($k['nama']); ?></span>
+                <p class="comment-text"><?= nl2br(htmlspecialchars($k['komentar'])); ?></p>
+                <small><?= $k['tanggal']; ?></small>
             </div>
         </div>
+    <?php endwhile; ?>
+</section>
 
-        <!-- Comments list -->
-        <section class="comments">
-            <h3>Comments (5)</h3>
 
-            <div class="comment">
-                <div class="avatar">👦</div>
-                <div class="comment-body">
-                    <span class="name">Faris Adhyaksa</span>
-                    <p class="comment-text">❤️🔥👍👏</p>
-                </div>
-            </div>
-
-            <div class="comment">
-                <div class="avatar">👩</div>
-                <div class="comment-body">
-                    <span class="name">Oktania Aya</span>
-                    <p class="comment-text">Wihhh keren banget! Budaya kita bisa go internasional 👏</p>
-                </div>
-            </div>
-
-            <div class="comment">
-                <div class="avatar">👩</div>
-                <div class="comment-body">
-                    <span class="name">Amelia Clarke</span>
-                    <p class="comment-text">😍😍😍</p>
-                </div>
-            </div>
-
-            <a href="#" class="view-more">View More</a>
-        </section>
     </aside>
 </main>
 
-<!-- ============================================= -->
-<!-- POIN 2 — FIND MORE DINAMIS -->
-<!-- ============================================= -->
+<!-- FIND MORE -->
 <section class="find-more">
     <h2>FIND MORE</h2>
 
@@ -197,7 +208,7 @@ $findMore = mysqli_query($conn, "
 <footer class="footer">
     <div class="footer-container">
         <div class="footer-logo">
-            <img src="Gambar/logo-berita.png" alt="" class="footer-logo-img">
+            <img src="Gambar/logo-berita.png" class="footer-logo-img">
         </div>
 
         <div class="footer-links">
