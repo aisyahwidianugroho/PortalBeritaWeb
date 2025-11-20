@@ -68,9 +68,10 @@ $categories = $conn->query("SELECT id, nama_kategori FROM categories ORDER BY na
           Simpan Perubahan
         </button>
 
-        <button class="btn" style="background:#4CAF50" name="aksi" value="approve" type="submit">
-          Setujui & Publikasikan
+        <button type="submit" name="kirim_admin" class="btn btn-success">
+            Setujui & Kirim ke Admin
         </button>
+
       </div>
     </form>
 

@@ -3,11 +3,12 @@ $PAGE_TITLE  = 'Artikel Disetujui';
 $ACTIVE_MENU = 'approved';
 include __DIR__ . '/partials/editor_header.php';
 
-$sql = "SELECT a.id, a.judul, a.tanggal_dipublikasi, a.views, u.nama_lengkap AS penulis
+$sql = "SELECT a.id, a.judul, a.tanggal_publish, a.views, u.nama_lengkap AS penulis
         FROM articles a
         LEFT JOIN users u ON u.id = a.id_penulis
-        WHERE a.status='published'
-        ORDER BY COALESCE(a.tanggal_dipublikasi, a.tanggal_dibuat) DESC";
+        WHERE a.status='dipublikasikan'
+        ORDER BY COALESCE(a.tanggal_publish, a.tanggal_dibuat) DESC";
+
 $res = $conn->query($sql);
 ?>
 <section class="card">
@@ -18,9 +19,17 @@ $res = $conn->query($sql);
         <?php while($r=$res->fetch_assoc()): ?>
           <li>
             <b><?= esc($r['judul']) ?></b>
-            <span style="color:#6b7280;margin-left:8px">oleh <?= esc($r['penulis'] ?? '-') ?></span>
-            <span style="color:#6b7280;margin-left:8px"><?= date('d M Y', strtotime($r['tanggal_dipublikasi'] ?? 'now')) ?></span>
-            <span style="color:#6b7280;margin-left:8px"><i class="fa-regular fa-eye"></i> <?= (int)($r['views'] ?? 0) ?></span>
+            <span style="color:#6b7280;margin-left:8px">
+              oleh <?= esc($r['penulis'] ?? '-') ?>
+            </span>
+
+            <span style="color:#6b7280;margin-left:8px">
+              <?= date('d M Y', strtotime($r['tanggal_publish'] ?? 'now')) ?>
+            </span>
+
+            <span style="color:#6b7280;margin-left:8px">
+              <i class="fa-regular fa-eye"></i> <?= (int)($r['views'] ?? 0) ?>
+            </span>
           </li>
         <?php endwhile; ?>
       </ul>

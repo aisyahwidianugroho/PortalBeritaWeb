@@ -16,28 +16,76 @@ $q = $conn->query("SELECT a.id, a.judul, a.status, a.tanggal_dibuat, a.views, c.
   <div class="card-header"><h3>Artikel Saya</h3></div>
   <div class="card-body" style="overflow:auto">
     <table style="width:100%;border-collapse:collapse">
-      <thead>
-        <tr style="background:#f9fafb">
-          <th style="text-align:left;padding:10px;border-bottom:1px solid #e5e7eb">Judul</th>
-          <th style="text-align:left;padding:10px;border-bottom:1px solid #e5e7eb">Kategori</th>
-          <th style="text-align:left;padding:10px;border-bottom:1px solid #e5e7eb">Status</th>
-          <th style="text-align:left;padding:10px;border-bottom:1px solid #e5e7eb">Tanggal</th>
-          <th style="text-align:left;padding:10px;border-bottom:1px solid #e5e7eb">Views</th>
+    <thead>
+    <tr>
+        <td style="padding:10px;border-bottom:1px solid #f1f5f9"><?= esc($r['judul']) ?></td>
+        <td style="padding:10px;border-bottom:1px solid #f1f5f9"><?= esc($r['nama_kategori'] ?? '-') ?></td>
+        <td style="padding:10px;border-bottom:1px solid #f1f5f9"><?= esc(ucfirst($r['status'])) ?></td>
+        <td style="padding:10px;border-bottom:1px solid #f1f5f9"><?= date('d M Y', strtotime($r['tanggal_dibuat'])) ?></td>
+        <td style="padding:10px;border-bottom:1px solid #f1f5f9"><?= (int)$r['views'] ?></td>
+
+        <!-- kolom Aksi -->
+        <td style="padding:10px;border-bottom:1px solid #f1f5f9">
+            <?php if ($r['status'] === 'draft'): ?>
+                <a href="jurnalis_edit.php?id=<?= $r['id']; ?>" 
+                  class="btn btn-warning btn-sm">
+                  Edit Draft ✏️
+                </a>
+            <?php else: ?>
+                -
+            <?php endif; ?>
+        </td>
+    </tr>
+</thead>
+<tbody>
+<?php if ($q && $q->num_rows > 0): ?>
+    <?php while ($r = $q->fetch_assoc()): ?>
+        <tr>
+            <td style="padding:10px;border-bottom:1px solid #f1f5f9;">
+                <?= htmlspecialchars($r['judul']) ?>
+            </td>
+
+            <td style="padding:10px;border-bottom:1px solid #f1f5f9;">
+                <?= htmlspecialchars($r['nama_kategori'] ?? '-') ?>
+            </td>
+
+            <td style="padding:10px;border-bottom:1px solid #f1f5f9;">
+                <?= ucfirst($r['status']) ?>
+            </td>
+
+            <td style="padding:10px;border-bottom:1px solid #f1f5f9;">
+                <?= date('d M Y', strtotime($r['tanggal_dibuat'])) ?>
+            </td>
+
+            <td style="padding:10px;border-bottom:1px solid #f1f5f9;">
+                <?= (int)$r['views'] ?>
+            </td>
+
+            <!-- Kolom Aksi -->
+            <td style="padding:10px;border-bottom:1px solid #f1f5f9;">
+                <?php if ($r['status'] === 'draft'): ?>
+                    <a href="jurnalis_edit.php?id=<?= $r['id']; ?>" 
+                       class="btn btn-warning btn-sm">
+                       Edit Draft
+                    </a>
+                <?php elseif ($r['status'] === 'pending'): ?>
+                    <span style="color:#64748b;">Menunggu Editor</span>
+                <?php elseif ($r['status'] === 'published'): ?>
+                    <span style="color:#22c55e;">✔ Sudah Terbit</span>
+                <?php else: ?>
+                    -
+                <?php endif; ?>
+            </td>
         </tr>
-      </thead>
-      <tbody>
-        <?php if($q && $q->num_rows): while($r=$q->fetch_assoc()): ?>
-          <tr>
-            <td style="padding:10px;border-bottom:1px solid #f1f5f9"><?= esc($r['judul']) ?></td>
-            <td style="padding:10px;border-bottom:1px solid #f1f5f9"><?= esc($r['nama_kategori'] ?? '-') ?></td>
-            <td style="padding:10px;border-bottom:1px solid #f1f5f9"><?= esc(ucfirst($r['status'])) ?></td>
-            <td style="padding:10px;border-bottom:1px solid #f1f5f9"><?= date('d M Y', strtotime($r['tanggal_dibuat'])) ?></td>
-            <td style="padding:10px;border-bottom:1px solid #f1f5f9"><?= (int)$r['views'] ?></td>
-          </tr>
-        <?php endwhile; else: ?>
-          <tr><td colspan="5" style="padding:10px">Belum ada artikel.</td></tr>
-        <?php endif; ?>
-      </tbody>
+    <?php endwhile; ?>
+<?php else: ?>
+    <tr>
+        <td colspan="6">Tidak ada artikel.</td>
+    </tr>
+<?php endif; ?>
+</tbody>
+
+
     </table>
 
     <?php
