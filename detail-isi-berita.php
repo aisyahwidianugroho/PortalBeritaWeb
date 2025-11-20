@@ -116,15 +116,7 @@ $komentar = mysqli_query($conn, "
 
     <!-- Sidebar -->
     <aside class="sidebar">
-        <h3>POPULER NEWS</h3>
-        <ul>
-            <li><a href="#">Resmi Jadi Guru Besar, Prof Hufron Singgung Pemakzulan...</a></li>
-            <li><a href="#">Tren Traveling Naik, Surabaya Jadi Tuan Rumah...</a></li>
-            <li><a href="#">Tren Desain Interior, Minimalis Masih Digemari...</a></li>
-            <li><a href="#">Spillway Sungai Tanggul Dibangun...</a></li>
-            <li><a href="#">Bank-Bank Bingung Serap Dana Rp200T...</a></li>
-        </ul>
-
+      
         <!-- Write Comment -->
 <div class="write-comment">
     <h3>Write Comment</h3>
