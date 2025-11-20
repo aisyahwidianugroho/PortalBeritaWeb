@@ -3,7 +3,7 @@ session_start();
 
 // hanya jurnalis & editor yang boleh kirim artikel
 if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'], ['jurnalis', 'editor'])) {
-    header("Location: ../Admin/login.php?err=Silakan login sebagai Jurnalis/Editor");
+    header("Location: login.php?err=Silakan login sebagai Jurnalis/Editor");
     exit;
 }
 
@@ -33,12 +33,20 @@ if (!empty($_FILES['gambar']['name'])) {
     $fileName   = uniqid("img_", true) . "_" . $safeName;
 
     if (move_uploaded_file($_FILES['gambar']['tmp_name'], "$dir/$fileName")) {
-        $gambar_sampul = "uploads/$fileName"; // path relatif
+        $gambar_sampul = "uploads/$fileName"; 
     }
 }
 
-// Status WAJIB pending supaya admin yg publish
-$status = "pending";
+// ------------ STATUS DARI TOMBOL ------------
+$status_req = $_POST['status'] ?? 'draft';
+
+if ($status_req === 'draft') {
+    $status = 'draft';
+} elseif ($status_req === 'pending') {
+    $status = 'pending';
+} else {
+    $status = 'draft';
+}
 
 // ---------------- INSERT DATA ----------------
 $sql = "INSERT INTO articles 
@@ -49,7 +57,7 @@ $stmt = mysqli_prepare($conn, $sql);
 
 mysqli_stmt_bind_param(
     $stmt,
-    "sssiiss",  // <<< FORMAT BENAR (7 huruf, tanpa spasi)
+    "sssiiss",
     $judul,
     $konten,
     $konten2,
@@ -60,8 +68,14 @@ mysqli_stmt_bind_param(
 );
 
 if (mysqli_stmt_execute($stmt)) {
-    header("Location: jurnalis_dashboard.php?msg=Artikel+berhasil+dikirim+(pending)");
+
+    if ($status === 'draft') {
+        header("Location: jurnalis_draft.php?msg=Draft+Berhasil+Disimpan");
+    } else {
+        header("Location: jurnalis_dashboard.php?msg=Artikel+Berhasil+Dikirim");
+    }
     exit;
+
 } else {
     die("Gagal menyimpan artikel: " . mysqli_error($conn));
 }

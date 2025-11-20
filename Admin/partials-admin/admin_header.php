@@ -17,7 +17,6 @@ $titles = [
     'komentar'       => 'Kelola Komentar'
 ];
 ?>
-
 <header class="header">
     <div class="header-left">
         <h1><?= $titles[$menu] ?? 'Admin Panel' ?></h1>
@@ -36,3 +35,4 @@ $titles = [
         </a>
     </div>
 </header>
+

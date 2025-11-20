@@ -84,10 +84,11 @@ body.role-admin {
    HEADER ADMIN (mirip jurnalis)
 ------------------------------------------------------------ */
 .header {
-    background: white;
-    padding: 18px 25px;
+    width: 100%;
+    background: #ffffff;
+    padding: 18px 30px;
     border-radius: 12px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
     margin-bottom: 25px;
     display: flex;
     justify-content: space-between;
@@ -222,3 +223,47 @@ body.role-admin {
     background: #d97706;
     color: white;
 }
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.header-right .info {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+    line-height: 1.15;
+}
+
+.logout-btn {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ef4444;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.logout-btn:hover {
+    color: #b91c1c;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.header-right .info {
+    display: flex;
+    flex-direction: column;
+    text-align: right;
+}
+

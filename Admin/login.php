@@ -2,11 +2,10 @@
 // Admin/login.php
 session_start();
 if (isset($_SESSION['user_id'])) {
-  // sudah login → lempar sesuai role
   switch ($_SESSION['role'] ?? '') {
-    case 'jurnalis': header('Location: ../Admin/jurnalis_dashboard.php'); exit;
-    case 'editor'  : header('Location: ../Admin/editor_dashboard.php');   exit;
-    case 'admin'   : header('Location: ../Admin/admin_dashboard.php');    exit;
+    case 'jurnalis': header('Location: jurnalis_dashboard.php'); exit;
+    case 'editor'  : header('Location: editor_dashboard.php');   exit;
+    case 'admin'   : header('Location: admin_dashboard.php');    exit;
   }
 }
 $err = $_GET['err'] ?? '';
