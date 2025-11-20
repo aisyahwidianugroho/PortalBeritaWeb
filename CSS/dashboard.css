@@ -210,6 +210,9 @@ body.role-admin   { --role-color:#e74c3c; }  /* merah */
 
 .btn-unpublish:hover {
     background: #d4a90e;
+<<<<<<< HEAD
+}
+=======
 }
 
 .badge-role, .badge-status {
@@ -230,3 +233,4 @@ body.role-admin   { --role-color:#e74c3c; }  /* merah */
 .badge-status.inactive { background:#e74c3c; color:white; }
 
 
+>>>>>>> 33c3ba567ce62ec582fc27cae2365cbac703135f

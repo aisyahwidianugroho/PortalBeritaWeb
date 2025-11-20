@@ -37,7 +37,7 @@ include __DIR__ . '/partials-jurnalis/jurnalis_header.php';
 
       <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:14px">
         <button class="btn btn-outline" name="status" value="draft" type="submit">Simpan Draft</button>
-        <button class="btn" name="status" value="pending" type="submit">Kirim ke Editor</button>
+        <button class="btn" name="status" value="review" type="submit">Kirim ke Editor</button>
       </div>
     </form>
   </div>

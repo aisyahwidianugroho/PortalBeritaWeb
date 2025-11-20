@@ -68,7 +68,7 @@ if (!$data) {
   <!-- NAVIGATION -->
   <nav class="nav">
     <ul class="nav-links">
-      <li><a href="Kategori(news).html">News</a></li>
+      <li><a href="kategori.php">News</a></li>
       <li><a href="#">Economy</a></li>
       <li><a href="#">Lifestyle</a></li>
       <li><a href="#">Culture</a></li>

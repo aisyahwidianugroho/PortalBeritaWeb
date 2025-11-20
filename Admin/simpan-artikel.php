@@ -13,7 +13,7 @@ $judul       = trim($_POST['judul'] ?? '');
 $konten      = trim($_POST['konten'] ?? '');
 $id_kategori = (int)($_POST['id_kategori'] ?? 0);
 $status_req  = $_POST['status'] ?? 'draft';
-$status      = in_array($status_req, ['draft','pending'], true) ? $status_req : 'draft';
+$status      = in_array($status_req, ['draft','pending','review'], true) ? $status_req : 'draft';
 $tags        = trim($_POST['tags'] ?? ''); // opsional, boleh kosong
 $id_penulis  = (int)$_SESSION['user_id'];
 

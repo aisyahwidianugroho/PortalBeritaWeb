@@ -12,8 +12,13 @@ $nama = $_SESSION['nama'] ?? 'Admin';
 // Deteksi menu aktif
 $menu = $_GET['menu'] ?? 'dashboard';
 ?>
+<<<<<<< HEAD
+
+<!DOCTYPE html><html lang="id">
+=======
 <!DOCTYPE html>
 <html lang="id">
+>>>>>>> 33c3ba567ce62ec582fc27cae2365cbac703135f
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
