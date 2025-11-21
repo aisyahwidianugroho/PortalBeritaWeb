@@ -24,7 +24,13 @@ $categories = $conn->query("SELECT id, nama_kategori FROM categories ORDER BY na
 
     <?php else: ?>
 
+    <!-- Jika status sudah menunggu_admin / published / rejected, editor TIDAK BOLEH edit -->
+    <?php if ($art['status'] !== 'pending' && $art['status'] !== 'review'): ?>
+        <p style="color:red">Artikel ini sudah dikirim ke admin / sudah diterbitkan. Tidak bisa diedit lagi.</p>
+    <?php else: ?>
+
     <form action="editor_update.php" method="POST" enctype="multipart/form-data" style="display:flex;flex-direction:column;gap:14px">
+
       <input type="hidden" name="id" value="<?= $art['id'] ?>">
 
       <!-- Judul -->
@@ -64,7 +70,7 @@ $categories = $conn->query("SELECT id, nama_kategori FROM categories ORDER BY na
 
       <!-- Tombol -->
       <div style="display:flex;gap:10px;justify-content:flex-end;margin-top:10px">
-        <button class="btn btn-outline" name="aksi" value="save" type="submit">
+        <button class="btn btn-outline" type="submit" name="save_only">
           Simpan Perubahan
         </button>
 
@@ -75,6 +81,7 @@ $categories = $conn->query("SELECT id, nama_kategori FROM categories ORDER BY na
       </div>
     </form>
 
+    <?php endif; ?>
     <?php endif; ?>
   </div>
 </section>

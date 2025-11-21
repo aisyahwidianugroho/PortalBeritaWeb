@@ -1,82 +1,65 @@
 <?php
 session_start();
 
-// hanya jurnalis & editor yang boleh kirim artikel
-if (!isset($_SESSION['user_id']) || !in_array($_SESSION['role'], ['jurnalis', 'editor'])) {
-    header("Location: login.php?err=Silakan login sebagai Jurnalis/Editor");
+if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'jurnalis') {
+    header("Location: ../login.php?err=Akses ditolak");
     exit;
 }
 
-require_once "../koneksi.php";
+require_once __DIR__ . '/../koneksi.php';
 
-// Ambil input
-$judul       = trim($_POST['judul'] ?? '');
-$konten      = trim($_POST['konten'] ?? '');
-$konten2     = trim($_POST['konten2'] ?? '');
+$id_penulis = $_SESSION['user_id'];
+
+$judul     = trim($_POST['judul'] ?? '');
+$konten    = trim($_POST['konten'] ?? '');
 $id_kategori = (int)($_POST['id_kategori'] ?? 0);
-$id_penulis  = (int)$_SESSION['user_id'];
 
-// VALIDASI WAJIB
-if ($judul === '' || $konten === '' || $id_kategori <= 0) {
-    header("Location: jurnalis-tulis.php?err=Lengkapi semua field wajib!");
-    exit;
+// Tentukan status berdasarkan tombol
+$aksi = $_POST['aksi'] ?? 'draft';
+
+if ($aksi === "kirim") {
+    $status = "pending"; // dikirim ke editor
+} else {
+    $status = "draft";   // simpan sebagai draft
 }
 
-// ------ UPLOAD GAMBAR (opsional) ------
+// Upload gambar
 $gambar_sampul = null;
-
 if (!empty($_FILES['gambar']['name'])) {
-    $dir = "../uploads";
-    if (!is_dir($dir)) mkdir($dir, 0777, true);
 
-    $safeName   = preg_replace('/[^A-Za-z0-9_\.-]/', '_', basename($_FILES['gambar']['name']));
-    $fileName   = uniqid("img_", true) . "_" . $safeName;
+    $uploadDir = __DIR__ . '/../uploads';
+    if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
 
-    if (move_uploaded_file($_FILES['gambar']['tmp_name'], "$dir/$fileName")) {
-        $gambar_sampul = "uploads/$fileName"; 
+    $safeName = preg_replace('/[^A-Za-z0-9_\.-]/', '_', basename($_FILES['gambar']['name']));
+    $fileName = uniqid('img_', true) . "_" . $safeName;
+
+    if (move_uploaded_file($_FILES['gambar']['tmp_name'], "$uploadDir/$fileName")) {
+        $gambar_sampul = "uploads/" . $fileName;
     }
 }
 
-// ------------ STATUS DARI TOMBOL ------------
-$status_req = $_POST['status'] ?? 'draft';
+// Simpan ke DB
+$stmt = $conn->prepare("
+    INSERT INTO articles (judul, konten, id_kategori, id_penulis, gambar_sampul, status, tanggal_dibuat)
+    VALUES (?, ?, ?, ?, ?, ?, NOW())
+");
 
-if ($status_req === 'draft') {
-    $status = 'draft';
-} elseif ($status_req === 'pending') {
-    $status = 'pending';
-} else {
-    $status = 'draft';
-}
-
-// ---------------- INSERT DATA ----------------
-$sql = "INSERT INTO articles 
-            (judul, konten, konten2, id_kategori, id_penulis, gambar_sampul, status, tanggal_dibuat)
-        VALUES (?, ?, ?, ?, ?, ?, ?, NOW())";
-
-$stmt = mysqli_prepare($conn, $sql);
-
-mysqli_stmt_bind_param(
-    $stmt,
-    "sssiiss",
-    $judul,
-    $konten,
-    $konten2,
-    $id_kategori,
-    $id_penulis,
-    $gambar_sampul,
+$stmt->bind_param("ssiiss", 
+    $judul, 
+    $konten, 
+    $id_kategori, 
+    $id_penulis, 
+    $gambar_sampul, 
     $status
 );
 
-if (mysqli_stmt_execute($stmt)) {
+$stmt->execute();
 
-    if ($status === 'draft') {
-        header("Location: jurnalis_draft.php?msg=Draft+Berhasil+Disimpan");
-    } else {
-        header("Location: jurnalis_dashboard.php?msg=Artikel+Berhasil+Dikirim");
-    }
-    exit;
-
+// Redirect
+if ($status === "pending") {
+    header("Location: jurnalis_saya.php?msg=Terkirim+ke+Editor");
 } else {
-    die("Gagal menyimpan artikel: " . mysqli_error($conn));
+    header("Location: jurnalis_draft.php?msg=Draft+disimpan");
 }
+exit;
 ?>

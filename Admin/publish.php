@@ -14,7 +14,7 @@ $id = intval($_GET['id']);
 // UPDATE status artikel → published
 $sql = "
     UPDATE articles 
-    SET status='published', 
+    SET status='dipublikasikan'
         tanggal_publish = NOW()
     WHERE id = $id
 ";

@@ -1,7 +1,6 @@
 <?php
 session_start();
 
-// Hanya editor yang boleh update
 if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'editor') {
     header("Location: ../login.php?err=Akses ditolak");
     exit;
@@ -9,76 +8,66 @@ if (!isset($_SESSION['user_id']) || ($_SESSION['role'] ?? '') !== 'editor') {
 
 require_once __DIR__ . '/../koneksi.php';
 
-// Ambil data dari form
 $id        = (int)($_POST['id'] ?? 0);
 $judul     = trim($_POST['judul'] ?? '');
 $konten    = trim($_POST['konten'] ?? '');
-$konten2   = trim($_POST['konten2'] ?? '');
 $kategori  = (int)($_POST['id_kategori'] ?? 0);
 
 // Ambil data lama
-$res = $conn->query("SELECT * FROM articles WHERE id = $id");
-$old = $res->fetch_assoc();
-
+$old = $conn->query("SELECT * FROM articles WHERE id = $id")->fetch_assoc();
 if (!$old) {
     die("Artikel tidak ditemukan.");
 }
 
-// ---- Upload Gambar (opsional) ----
-$gambar = $old['gambar_sampul']; // default tetap gambar lama
+// Upload gambar
+$gambar = $old['gambar_sampul'];
 
 if (!empty($_FILES['gambar']['name'])) {
+
     $uploadDir = __DIR__ . '/../uploads';
     if (!is_dir($uploadDir)) mkdir($uploadDir, 0777, true);
 
-    $safeName = preg_replace('/[^A-Za-z0-9_\.-]/', '_', basename($_FILES['gambar']['name']));
-    $fileName = uniqid('img_', true) . '_' . $safeName;
+    $safe = preg_replace('/[^A-Za-z0-9_\.-]/', '_', basename($_FILES['gambar']['name']));
+    $fname = uniqid('img_', true) . "_" . $safe;
 
-    if (move_uploaded_file($_FILES['gambar']['tmp_name'], "$uploadDir/$fileName")) {
-        $gambar = 'uploads/' . $fileName;
+    if (move_uploaded_file($_FILES['gambar']['tmp_name'], "$uploadDir/$fname")) {
+        $gambar = "uploads/$fname";
     }
 }
 
-// ---- Tentukan status berdasarkan tombol ----
+// Tentukan status baru
 if (isset($_POST['kirim_admin'])) {
-    // Editor mengirim artikel ke admin untuk final review
     $status = "menunggu_admin";
 } else {
-    // Hanya simpan perubahan, status tidak berubah
-    $status = $old['status'];
+    $status = $old['status']; // tidak berubah
 }
 
-// ---- Update artikel ----
-$sql = "
+$stmt = $conn->prepare("
     UPDATE articles SET 
         judul = ?, 
         konten = ?, 
-        konten2 = ?,
         id_kategori = ?, 
         gambar_sampul = ?, 
         status = ?
     WHERE id = ?
-";
+");
 
-$stmt = $conn->prepare($sql);
 $stmt->bind_param(
-    "sssissi", 
-    $judul, 
-    $konten, 
-    $konten2,
-    $kategori, 
-    $gambar, 
-    $status, 
+    "ssissi",
+    $judul,
+    $konten,
+    $kategori,
+    $gambar,
+    $status,
     $id
 );
 
 $stmt->execute();
 
-// Redirect
-if (isset($_POST['kirim_admin'])) {
-    header("Location: editor_edit.php?id=$id&msg=Terkirim+ke+Admin");
+if ($status === "menunggu_admin") {
+    header("Location: editor_review.php?msg=Terkirim+ke+Admin");
 } else {
-    header("Location: editor_edit.php?id=$id&msg=Perubahan+Disimpan");
+    header("Location: editor_edit.php?msg=Perubahan+Disimpan");
 }
 exit;
 ?>

@@ -48,8 +48,8 @@ $res = $conn->query($sql);
                   Edit
                 </a>
                 <a class="btn btn-sm btn-primary"
-                   href="editor_publish.php?id=<?= (int)$r['id'] ?>"
-                   onclick="return confirm('Setujui & terbitkan artikel ini?')">
+                  href="editor_take.php?id=<?= (int)$r['id'] ?>"
+                  onclick="return confirm('Setujui & kirim ke Admin?')">
                   Setujui
                 </a>
               </td>
