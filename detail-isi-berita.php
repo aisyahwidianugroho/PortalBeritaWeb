@@ -1,11 +1,10 @@
 <?php
 include "koneksi.php";
-session_start();
 
 // Ambil ID artikel dari URL
-$id_artikel = $_GET['id'] ?? 0;
+$id_artikel = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
-// Query artikel utama
+// Query artikel
 $sql = "SELECT a.*, c.nama_kategori 
         FROM articles a
         LEFT JOIN categories c ON a.id_kategori = c.id
@@ -14,34 +13,26 @@ $sql = "SELECT a.*, c.nama_kategori
 $artikel = mysqli_query($conn, $sql);
 $data = mysqli_fetch_assoc($artikel);
 
-// Jika artikel tidak ditemukan
 if (!$data) {
     echo "Artikel tidak ditemukan.";
     exit;
 }
 
-// =============================================
-// QUERY FIND MORE — ambil 4 artikel terbaru selain artikel ini
-// =============================================
-$id_aktif = $data['id'];
-
+// FIND MORE
 $findMore = mysqli_query($conn, "
     SELECT * FROM articles
-    WHERE status = 'published' AND id != $id_aktif
+    WHERE status = 'published' AND id != $id_artikel
     ORDER BY tanggal_publish DESC
     LIMIT 4
 ");
 
-// =============================================
-// QUERY KOMENTAR — ambil komentar artikel ini
-// =============================================
-$komentar = mysqli_query($conn, "
-    SELECT * FROM comments
-    WHERE artikel_id = $id_artikel
+// KOMENTAR
+$komen = mysqli_query($conn, "
+    SELECT * FROM comments 
+    WHERE artikel_id = $id_artikel AND status='approved'
     ORDER BY tanggal DESC
 ");
 ?>
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -52,16 +43,13 @@ $komentar = mysqli_query($conn, "
 </head>
 <body>
 
-<!-- Header -->
 <header class="header">
-    <div class="header-top">
-    <?= strtoupper(date("F d, Y")); ?>
-</div>
-
+    <div class="header-top"><?= strtoupper(date("F d, Y")); ?></div>
 
     <div class="header-main">
         <div class="left">
             <button class="menu-btn">☰</button>
+
             <div class="dropdown-menu">
                 <a href="kategori.php?id=1">News</a>
                 <a href="kategori.php?id=2">Economy</a>
@@ -71,6 +59,7 @@ $komentar = mysqli_query($conn, "
                 <a href="kategori.php?id=6">World</a>
                 <a href="kategori.php?id=7">Fashion</a>
             </div>
+
             <div class="weather">☀ 38° Surabaya</div>
         </div>
 
@@ -79,13 +68,10 @@ $komentar = mysqli_query($conn, "
             <p class="tagline">PORTAL BERITA TERPERCAYA UNTUK SURABAYA</p>
         </div>
 
-        <div class="right">
-            <span>👤</span>
-        </div>
+        <div class="right"><span>👤</span></div>
     </div>
 </header>
 
-<!-- NAVIGATION -->
 <nav class="nav">
     <ul class="nav-links">
         <li><a href="kategori.php?id=1">News</a></li>
@@ -98,76 +84,62 @@ $komentar = mysqli_query($conn, "
     </ul>
 </nav>
 
-<!-- Content -->
 <main>
-    <!-- Artikel utama -->
     <article class="content">
         <p class="tag"><?= strtoupper($data['nama_kategori']) ?></p>
-
         <h2><?= htmlspecialchars($data['judul']) ?></h2>
-        
-        <p class="date">
-            <?= date("d F Y H:i", strtotime($data['tanggal_dibuat'])) ?>
-        </p>
 
-        <p><?= nl2br($data['konten']) ?></p>
+        <p class="date"><?= date("d F Y H:i", strtotime($data['tanggal_dibuat'])) ?></p>
+
+        <p><?= nl2br(htmlspecialchars($data['konten'])) ?></p>
 
         <img src="<?= $data['gambar_sampul'] ?>" alt="Gambar Artikel">
 
-        <p><?= nl2br($data['konten2']) ?></p>
+        <p><?= nl2br(htmlspecialchars($data['konten2'])) ?></p>
     </article>
 
-    <!-- Sidebar -->
     <aside class="sidebar">
-      
-        <!-- Write Comment -->
-<div class="write-comment">
-    <h3>Write Comment</h3>
 
-    <form action="simpan_komentar.php" method="POST" class="comment-form">
-        <div class="avatar">👤</div>
+        <!-- Form Komentar -->
+        <div class="write-comment">
+            <h3>Write Comment</h3>
 
-        <div class="form-body">
-            <div class="user-name"><?= $_SESSION['nama'] ?? 'Guest' ?></div>
+            <form action="simpan_komentar.php" method="POST" class="comment-form">
+                
+                <div class="form-body">
 
-            <input type="hidden" name="artikel_id" value="<?= $id_artikel ?>">
-            <input type="hidden" name="nama" value="<?= $_SESSION['nama'] ?? 'Anonymous' ?>">
+                    <label>Nama Anda:</label>
+                    <input type="text" name="nama" required placeholder="Masukkan nama Anda" class="input-name">
 
-            <textarea name="komentar" required placeholder="Ketik Komentar"></textarea>
+                    <input type="hidden" name="artikel_id" value="<?= $id_artikel ?>">
 
-            <button type="submit">Post</button>
+                    <textarea name="komentar" required placeholder="Ketik komentar..."></textarea>
+
+                    <button type="submit">Post</button>
+                </div>
+            </form>
         </div>
-    </form>
-</div>
 
+        <!-- Daftar Komentar -->
+        <section class="comments">
+            <h3>Comments (<?= mysqli_num_rows($komen) ?>)</h3>
 
-       <?php
-$komen = mysqli_query($conn, "
-    SELECT * FROM comments 
-    WHERE artikel_id = $id_artikel AND status='approved'
-    ORDER BY tanggal DESC
-");
-?>
+            <?php if (mysqli_num_rows($komen) == 0): ?>
+                <p class="no-comment">Belum ada komentar.</p>
+            <?php endif; ?>
 
-<section class="comments">
-    <h3>Comments (<?= mysqli_num_rows($komen); ?>)</h3>
+            <?php while ($k = mysqli_fetch_assoc($komen)): ?>
+            <div class="comment">
+                <div class="avatar">👤</div>
 
-    <?php if (mysqli_num_rows($komen) == 0): ?>
-        <p class="no-comment">Belum ada komentar</p>
-    <?php endif; ?>
-
-    <?php while ($k = mysqli_fetch_assoc($komen)): ?>
-        <div class="comment">
-            <div class="avatar">👤</div>
-            <div class="comment-body">
-                <span class="name"><?= htmlspecialchars($k['nama']); ?></span>
-                <p class="comment-text"><?= nl2br(htmlspecialchars($k['komentar'])); ?></p>
-                <small><?= $k['tanggal']; ?></small>
+                <div class="comment-body">
+                    <span class="name"><?= htmlspecialchars($k['nama']) ?></span>
+                    <p class="comment-text"><?= nl2br(htmlspecialchars($k['komentar'])) ?></p>
+                    <small><?= $k['tanggal'] ?></small>
+                </div>
             </div>
-        </div>
-    <?php endwhile; ?>
-</section>
-
+            <?php endwhile; ?>
+        </section>
 
     </aside>
 </main>
@@ -175,35 +147,25 @@ $komen = mysqli_query($conn, "
 <!-- FIND MORE -->
 <section class="find-more">
     <h2>FIND MORE</h2>
-
     <div class="find-grid">
-
         <?php while ($fm = mysqli_fetch_assoc($findMore)): ?>
             <div class="find-card">
-
-                <img src="<?= $fm['gambar_sampul']; ?>" alt="">
-
+                <img src="<?= $fm['gambar_sampul'] ?>" alt="">
                 <div class="find-content">
-                    <h3>
-                        <a href="detail-isi-berita.php?id=<?= $fm['id']; ?>">
-                            <?= htmlspecialchars($fm['judul']); ?>
-                        </a>
-                    </h3>
-
-                    <p><?= substr($fm['konten'], 0, 150); ?>...</p>
+                    <h3><a href="detail-isi-berita.php?id=<?= $fm['id'] ?>">
+                        <?= htmlspecialchars($fm['judul']) ?>
+                    </a></h3>
+                    <p><?= substr($fm['konten'], 0, 150) ?>...</p>
                 </div>
-
             </div>
         <?php endwhile; ?>
-
     </div>
 </section>
-
 <!-- FOOTER -->
 <footer class="footer">
     <div class="footer-container">
         <div class="footer-logo">
-            <img src="Gambar/logo-berita.png" class="footer-logo-img">
+            <img src="Gambar/logo-berita.png" alt="" class="footer-logo-img">
         </div>
 
         <div class="footer-links">
@@ -233,6 +195,7 @@ $komen = mysqli_query($conn, "
         © 2025 The Surabaya iNews. All rights reserved.
     </div>
 </footer>
+
 
 </body>
 </html>

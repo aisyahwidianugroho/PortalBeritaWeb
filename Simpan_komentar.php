@@ -1,17 +1,18 @@
 <?php
 include "koneksi.php";
 
-$artikel_id = $_POST['artikel_id'];
-$nama       = $_POST['nama'];
-$komentar   = $_POST['komentar'];
+// Tangkap data
+$artikel_id = (int)$_POST['artikel_id'];
+$nama       = mysqli_real_escape_string($conn, $_POST['nama']);
+$komentar   = mysqli_real_escape_string($conn, $_POST['komentar']);
 
-// Insert komentar
+// Simpan komentar
 mysqli_query($conn, "
     INSERT INTO comments (artikel_id, nama, komentar, tanggal, status)
-    VALUES ('$artikel_id', '$nama', '$komentar', NOW(), 'approved')
+    VALUES ($artikel_id, '$nama', '$komentar', NOW(), 'approved')
 ");
 
-// Kembali ke halaman artikel
-header("Location: detail-isi-berita.php?id=" . $artikel_id);
+// Redirect kembali
+header("Location: detail-isi-berita.php?id=$artikel_id");
 exit;
 ?>
