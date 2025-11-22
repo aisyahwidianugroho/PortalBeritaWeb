@@ -53,11 +53,18 @@ $q = $conn->query("
           <td><?= date('d M Y', strtotime($row['tanggal_dibuat'])) ?></td>
 
           <td style="text-align:center;">
-            <a href="jurnalis_edit.php?id=<?= $row['id'] ?>" 
-               class="btn-edit"
-               style="color:#3498db; text-decoration:none; font-weight:500;">
-              Edit
-            </a>
+              <a href="jurnalis_edit.php?id=<?= $row['id'] ?>" 
+                style="color:#3498db; text-decoration:none; font-weight:500;">
+                Edit
+              </a>
+          </td>
+
+              <a href="jurnalis_kirim.php?id=<?= $row['id'] ?>"
+                class="btn-send"
+                style="color:#10b981; text-decoration:none; font-weight:500;"
+                onclick="return confirm('Kirim artikel ke Editor? Setelah dikirim Anda tidak bisa mengedit.');">
+                  Kirim ke Editor
+              </a>
           </td>
         </tr>
         <?php endwhile; ?>
