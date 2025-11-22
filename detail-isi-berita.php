@@ -54,7 +54,10 @@ $komentar = mysqli_query($conn, "
 
 <!-- Header -->
 <header class="header">
-    <div class="header-top">SEPTEMBER 15, 2025</div>
+    <div class="header-top">
+    <?= strtoupper(date("F d, Y")); ?>
+</div>
+
 
     <div class="header-main">
         <div class="left">
