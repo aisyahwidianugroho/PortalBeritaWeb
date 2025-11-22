@@ -6,7 +6,7 @@ include __DIR__ . '/partials/editor_header.php';
 $sql = "SELECT a.id, a.judul, a.tanggal_publish, a.views, u.nama_lengkap AS penulis
         FROM articles a
         LEFT JOIN users u ON u.id = a.id_penulis
-        WHERE a.status='dipublikasikan'
+        WHERE a.status='published'
         ORDER BY COALESCE(a.tanggal_publish, a.tanggal_dibuat) DESC";
 
 $res = $conn->query($sql);

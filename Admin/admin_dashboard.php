@@ -146,10 +146,8 @@ $menu = $_GET['menu'] ?? 'dashboard';
 
 
 
-
-<!-- ========================== DASHBOARD ========================== -->
+<!-- ========================== DASHBOARD ADMIN ========================== -->
 <?php
-// Hitung statistik
 $publish  = mysqli_fetch_assoc(mysqli_query($conn,
             "SELECT COUNT(*) AS total FROM articles WHERE status='published'"))['total'] ?? 0;
 
@@ -165,15 +163,15 @@ $pembacaRaw = mysqli_fetch_assoc(mysqli_query($conn,
 $pembaca = ($pembacaRaw >= 1000) ? round($pembacaRaw / 1000)."K" : $pembacaRaw;
 ?>
 
+
 <?php if ($menu == 'dashboard'): ?>
 
 <section class="card dashboard-section">
 
     <h2 class="section-title">Dashboard Admin</h2>
 
-    <!-- STATISTIK -->
+    <!-- STAT -->
     <div class="stat-box">
-
         <div class="stat-card">
             <div class="value" style="color:#2563eb;"><?= $publish ?></div>
             <div class="label">Artikel Terbit</div>
@@ -193,16 +191,80 @@ $pembaca = ($pembacaRaw >= 1000) ? round($pembacaRaw / 1000)."K" : $pembacaRaw;
             <div class="value" style="color:#7c3aed;"><?= $pembaca ?></div>
             <div class="label">Total Pembaca</div>
         </div>
+    </div>
 
+
+    <!-- ===================== STATISTIK ADMIN (2 GRAFIK) ===================== -->
+    <div class="card" style="margin-top:20px;">
+        <div class="card-header">
+            <h3>Statistik Admin</h3>
+        </div>
+
+        <div class="card-body" style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
+            
+            <!-- Bar Chart -->
+            <div>
+                <canvas id="adminBarChart" height="150"></canvas>
+            </div>
+
+            <!-- Line Chart -->
+            <div>
+                <canvas id="adminLineChart" height="150"></canvas>
+            </div>
+
+        </div>
     </div>
 
 </section>
 
 <?php endif; ?>
 
-
 </main>
 
-<script src="../JAVA/admin_stats.js"></script>
+
+<!-- ===================== CHART SCRIPT ===================== -->
+<script>
+// BAR CHART
+new Chart(document.getElementById('adminBarChart'), {
+    type: 'bar',
+    data: {
+        labels: ['Terbit', 'Pending', 'Jurnalis', 'Pembaca'],
+        datasets: [{
+            label: 'Total',
+            data: [
+                <?= $publish ?>,
+                <?= $pending ?>,
+                <?= $jurnalis ?>,
+                <?= is_numeric($pembacaRaw) ? $pembacaRaw : 0 ?>
+            ],
+            backgroundColor: ['#3b82f6','#f59e0b','#10b981','#9333ea'],
+            borderRadius: 8
+        }]
+    },
+    options: { scales: { y: { beginAtZero: true } } }
+});
+
+
+// LINE CHART (Total Pembaca Bulanan)
+new Chart(document.getElementById('adminLineChart'), {
+    type: 'line',
+    data: {
+        labels: ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'],
+        datasets: [{
+            label: 'Total Pembaca',
+            data: [
+                <?= is_numeric($pembacaRaw) ? $pembacaRaw : 0 ?>,0,0,0,0,0,0,0,0,0,0,0
+            ],
+            borderColor: '#9333ea',
+            backgroundColor: 'rgba(147,51,234,0.2)',
+            borderWidth: 2,
+            tension: 0.3,
+            pointRadius: 4
+        }]
+    },
+    options: { scales: { y: { beginAtZero: true } } }
+});
+</script>
+
 </body>
 </html>
