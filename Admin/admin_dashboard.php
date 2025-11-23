@@ -421,10 +421,10 @@ $pembaca = ($pembacaRaw >= 1000) ? round($pembacaRaw / 1000)."K" : $pembacaRaw;
     <?php 
     // Ambil komentar beserta info artikel
     $komentar = mysqli_query($conn, "
-        SELECT k.id, k.nama, k.email, k.isi, k.tanggal, a.judul 
-        FROM comments k
-        LEFT JOIN articles a ON k.id_artikel = a.id
-        ORDER BY k.tanggal DESC
+        SELECT c.id, c.nama, c.komentar, c.tanggal, a.judul 
+        FROM comments c
+        JOIN articles a ON c.artikel_id = a.id
+        ORDER BY c.tanggal DESC
     ");
     ?>
 
@@ -433,7 +433,6 @@ $pembaca = ($pembacaRaw >= 1000) ? round($pembacaRaw / 1000)."K" : $pembacaRaw;
         <thead>
             <tr>
                 <th>Nama</th>
-                <th>Email</th>
                 <th>Komentar</th>
                 <th>Artikel</th>
                 <th>Tanggal</th>
@@ -445,10 +444,9 @@ $pembaca = ($pembacaRaw >= 1000) ? round($pembacaRaw / 1000)."K" : $pembacaRaw;
         <?php while($k = mysqli_fetch_assoc($komentar)): ?>
             <tr>
                 <td><?= htmlspecialchars($k['nama']) ?></td>
-                <td><?= htmlspecialchars($k['email']) ?></td>
 
                 <td style="max-width:280px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
-                    <?= htmlspecialchars($k['isi']) ?>
+                    <?= htmlspecialchars($k['komentar']) ?>
                 </td>
 
                 <td><?= htmlspecialchars($k['judul']) ?></td>
