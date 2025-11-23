@@ -57,6 +57,7 @@ $menu = $_GET['menu'] ?? 'dashboard';
 
         <a href="admin_dashboard.php?menu=kategori" class="<?= ($menu == 'kategori') ? 'active' : '' ?>">
             <i class="fas fa-tags"></i><span>Kelola Kategori</span>
+            
         </a>
 
         <a href="admin_dashboard.php?menu=user" class="<?= ($menu == 'user') ? 'active' : '' ?>">
@@ -214,6 +215,261 @@ $pembaca = ($pembacaRaw >= 1000) ? round($pembacaRaw / 1000)."K" : $pembacaRaw;
 
         </div>
     </div>
+
+</section>
+
+<?php endif; ?>
+<!-- ========================== KELOLA KATEGORI ========================== -->
+<?php if ($menu == 'kategori'): ?>
+
+<section class="card dashboard-section">
+    <h2 class="section-title">Kelola Kategori</h2>
+
+    <!-- FORM TAMBAH KATEGORI -->
+    <form action="kategori_tambah.php" method="POST" 
+          style="margin-bottom:20px; display:flex; gap:10px;">
+        <input type="text" name="nama_kategori" 
+               placeholder="Nama kategori..." required
+               style="padding:10px 14px; border-radius:8px; border:1px solid #cbd5e1; flex:1;">
+        <button type="submit" class="btn-action btn-publish">Tambah</button>
+    </form>
+<?php if (isset($_GET['edit'])): 
+    $editId = (int) $_GET['edit'];
+    $edata = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM categories WHERE id=$editId"));
+?>
+    <div class="card" style="margin-bottom:20px;">
+        <h3 class="section-title">Edit Kategori</h3>
+        
+        <form action="kategori_edit_proses.php" method="POST" 
+              style="display:flex; flex-direction:column; gap:12px;">
+
+            <input type="hidden" name="id" value="<?= $edata['id'] ?>">
+
+            <input type="text" name="nama_kategori" 
+                   value="<?= htmlspecialchars($edata['nama_kategori']) ?>"
+                   placeholder="Nama kategori..." 
+                   style="padding:10px; border-radius:8px; border:1px solid #cbd5e1;" required>
+
+            <textarea name="deskripsi" 
+                      style="padding:10px; border-radius:8px; border:1px solid #cbd5e1; height:80px;">
+<?= htmlspecialchars($edata['deskripsi']) ?>
+            </textarea>
+
+            <select name="status" style="padding:10px; border-radius:8px; border:1px solid #cbd5e1;">
+                <option value="active"   <?= ($edata['status']=='active')?'selected':'' ?>>Active</option>
+                <option value="inactive" <?= ($edata['status']=='inactive')?'selected':'' ?>>Inactive</option>
+            </select>
+
+            <button class="btn-action btn-publish">Simpan Perubahan</button>
+        </form>
+    </div>
+<?php endif; ?>
+
+    <?php 
+    $kat = mysqli_query($conn, "SELECT * FROM categories ORDER BY id DESC");
+    ?>
+<?php if (!isset($_GET['edit']) && mysqli_num_rows($kat)): ?>
+    <table class="table-berita">
+
+        <thead>
+            <tr>
+                <th>Nama Kategori</th>
+                <th>Slug</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        <?php while($row = mysqli_fetch_assoc($kat)): ?>
+            <tr>
+                <td><?= htmlspecialchars($row['nama_kategori']) ?></td>
+                <td><?= htmlspecialchars($row['slug'] ?? '-') ?></td>
+                <td>
+                    <div class="action-buttons">
+                        <a href="admin_dashboard.php?menu=kategori&edit=<?= $row['id'] ?>" 
+                        class="btn-action btn-publish">Edit</a>
+                        <a href="kategori_hapus.php?id=<?= $row['id'] ?>" 
+                           class="btn-action btn-delete"
+                           onclick="return confirm('Hapus kategori ini?')">
+                           Hapus
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        <?php endwhile; ?>
+        </tbody>
+    </table>
+
+<?php endif; ?>
+</section>
+<?php endif; ?>
+<?php if ($menu == 'user'): ?>
+<?php if (isset($_GET['edit_user'])): 
+    $uid = (int) $_GET['edit_user'];
+    $u = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM users WHERE id=$uid"));
+?>
+    <div class="card" style="margin-bottom:20px;">
+        <h3 class="section-title">Edit Pengguna</h3>
+
+        <form action="user_edit_proses.php" method="POST" 
+              style="display:flex; flex-direction:column; gap:12px;">
+
+            <input type="hidden" name="id" value="<?= $u['id'] ?>">
+
+            <input type="text" name="nama_lengkap" 
+                   value="<?= $u['nama_lengkap'] ?>"
+                   placeholder="Nama lengkap..."
+                   style="padding:10px; border-radius:8px; border:1px solid #cbd5e1;">
+
+            <input type="text" name="username" 
+                   value="<?= $u['username'] ?>"
+                   placeholder="Username..."
+                   style="padding:10px; border-radius:8px; border:1px solid #cbd5e1;">
+
+            <input type="email" name="email" 
+                   value="<?= $u['email'] ?>"
+                   placeholder="Email..."
+                   style="padding:10px; border-radius:8px; border:1px solid #cbd5e1;">
+
+            <select name="role" style="padding:10px; border-radius:8px; border:1px solid #cbd5e1;">
+                <option value="admin"   <?= ($u['role']=='admin')?'selected':'' ?>>Admin</option>
+                <option value="editor"  <?= ($u['role']=='editor')?'selected':'' ?>>Editor</option>
+                <option value="jurnalis"<?= ($u['role']=='jurnalis')?'selected':'' ?>>Jurnalis</option>
+            </select>
+
+            <select name="status" style="padding:10px; border-radius:8px; border:1px solid #cbd5e1;">
+                <option value="active"   <?= ($u['status']=='active')?'selected':'' ?>>Active</option>
+                <option value="inactive" <?= ($u['status']=='inactive')?'selected':'' ?>>Inactive</option>
+            </select>
+
+            <button class="btn-action btn-publish">Simpan Perubahan</button>
+
+        </form>
+    </div>
+<?php endif; ?>
+
+<section class="card dashboard-section">
+    <h2 class="section-title">Kelola Pengguna</h2>
+
+    <?php 
+    // Ambil daftar user yang ada
+    $users = mysqli_query($conn, "
+        SELECT id, username, nama_lengkap, email, role, status, tanggal_bergabung
+        FROM users
+        ORDER BY tanggal_bergabung DESC
+    ");
+    ?>
+
+    <?php if ($users && mysqli_num_rows($users) > 0): ?>
+
+    <table class="table-berita">
+        <thead>
+            <tr>
+                <th>Nama Lengkap</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th>Tanggal Bergabung</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        <?php while($u = mysqli_fetch_assoc($users)): ?>
+            <tr>
+                <td><?= htmlspecialchars($u['nama_lengkap']) ?></td>
+                <td><?= htmlspecialchars($u['username']) ?></td>
+                <td><?= htmlspecialchars($u['email']) ?></td>
+                <td><?= ucfirst($u['role']) ?></td>
+
+                <td>
+                    <span class="badge-status 
+                        <?= $u['status']=='active' ? 'badge-published' : 'badge-rejected' ?>">
+                        <?= ucfirst($u['status']) ?>
+                    </span>
+                </td>
+
+                <td><?= date('d M Y H:i', strtotime($u['tanggal_bergabung'])) ?></td>
+
+                <td>
+                    <a href="admin_dashboard.php?menu=user&edit_user=<?= $u['id'] ?>" 
+                        class="btn-action btn-publish">Edit</a>
+                    <a href="user_hapus.php?id=<?= $u['id'] ?>" 
+                       class="btn-action btn-delete"
+                       onclick="return confirm('Yakin ingin menghapus pengguna ini?')">
+                       Hapus
+                    </a>
+                </td>
+            </tr>
+        <?php endwhile; ?>
+        </tbody>
+    </table>
+
+    <?php else: ?>
+        <p style="margin-top:10px;">Belum ada data pengguna.</p>
+    <?php endif; ?>
+
+</section>
+
+<?php endif; ?>
+<?php if ($menu == 'komentar'): ?>
+
+<section class="card dashboard-section">
+    <h2 class="section-title">Kelola Komentar</h2>
+
+    <?php 
+    // Ambil komentar beserta info artikel
+    $komentar = mysqli_query($conn, "
+        SELECT k.id, k.nama, k.email, k.isi, k.tanggal, a.judul 
+        FROM comments k
+        LEFT JOIN articles a ON k.id_artikel = a.id
+        ORDER BY k.tanggal DESC
+    ");
+    ?>
+
+    <?php if ($komentar && mysqli_num_rows($komentar) > 0): ?>
+    <table class="table-berita">
+        <thead>
+            <tr>
+                <th>Nama</th>
+                <th>Email</th>
+                <th>Komentar</th>
+                <th>Artikel</th>
+                <th>Tanggal</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        <?php while($k = mysqli_fetch_assoc($komentar)): ?>
+            <tr>
+                <td><?= htmlspecialchars($k['nama']) ?></td>
+                <td><?= htmlspecialchars($k['email']) ?></td>
+
+                <td style="max-width:280px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
+                    <?= htmlspecialchars($k['isi']) ?>
+                </td>
+
+                <td><?= htmlspecialchars($k['judul']) ?></td>
+
+                <td><?= date('d M Y H:i', strtotime($k['tanggal'])) ?></td>
+
+                <td>
+                    <a href="komentar_hapus.php?id=<?= $k['id'] ?>" 
+                       class="btn-action btn-delete"
+                       onclick="return confirm('Hapus komentar ini?')">
+                       Hapus
+                    </a>
+                </td>
+            </tr>
+        <?php endwhile; ?>
+        </tbody>
+    </table>
+
+    <?php else: ?>
+        <p style="margin-top:10px;">Belum ada komentar.</p>
+    <?php endif; ?>
 
 </section>
 
