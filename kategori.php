@@ -76,7 +76,7 @@ $q = mysqli_query($conn, "
         <li><a href="kategori.php?id=4">Culture</a></li>
         <li><a href="kategori.php?id=5">Sports</a></li>
         <li><a href="kategori.php?id=6">World</a></li>
-        <li><a href="kategori.php?id=7">Fashion</a></li>
+        <li><a href="kategori.php?id=9">Fashion</a></li>
     </ul>
 </nav>
 
@@ -160,7 +160,7 @@ $q = mysqli_query($conn, "
                 <li><a href="kategori.php?id=4">Culture</a></li>
                 <li><a href="kategori.php?id=5">Sports</a></li>
                 <li><a href="kategori.php?id=6">World</a></li>
-                <li><a href="kategori.php?id=7">Fashion</a></li>
+                <li><a href="kategori.php?id=9">Fashion</a></li>
             </ul>
         </div>
 
