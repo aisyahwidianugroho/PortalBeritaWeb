@@ -85,6 +85,8 @@ $sidebar_culture = mysqli_query($conn,"
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Surabaya iNews</title>
 <link rel="stylesheet" href="CSS/home.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 </head>
 <body>
 
@@ -192,10 +194,13 @@ $sidebar_culture = mysqli_query($conn,"
 <!-- SIDEBAR -->
 <aside class="sidebar">
 
-    <div class="search-box">
-        <input type="text" class="search-input" placeholder="Search">
-    </div>
+<div class="search-box">
+    <input type="text" class="search-input" placeholder="Search...">
 
+    <button class="search-btn">
+        <i class="fa fa-search"></i>
+    </button>
+</div>
 
     <!-- ECONOMY -->
     <div class="news-section">
