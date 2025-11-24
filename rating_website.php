@@ -9,6 +9,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($rating >= 1 && $rating <= 5) {
         mysqli_query($conn, "INSERT INTO rating_website (rating) VALUES ($rating)");
         $success = true;
+
+        // ⬇⬇⬇ Redirect ke halaman News
+        header("Location: kategori.php?id=1");
+        exit;
     }
 }
 ?>

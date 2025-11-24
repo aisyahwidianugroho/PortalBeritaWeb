@@ -62,54 +62,101 @@ ul {
 }
 
 /* =========================================================
-   HEADER
+   HEADER FIXED PERFECT CENTER
 ========================================================= */
+
 .header {
   background: #fff;
-  border-bottom: 1px solid #eee;
+  border-bottom: 2px solid #ddd;
 }
 
 .header-top {
+  background: #ffffff;
   color: #605e5e;
   text-align: center;
   font-size: 14px;
   padding: 6px;
 }
 
+/* GRID 3 KOLOM = left | center | right */
 .header-main {
   max-width: 1150px;
   margin: auto;
   padding: 12px 16px;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
   align-items: center;
 }
 
-.header-main .left,
-.header-main .center,
-.header-main .right {
+/* LEFT – menu + cuaca */
+.header-main .left {
   display: flex;
   align-items: center;
+  gap: 12px;
 }
 
-.weather {
-  font-size: 14px;
-  color: #555;
-}
-
-.center {
+/* CENTER – logo benar-benar di tengah */
+.header-main .center {
+  display: flex;
   flex-direction: column;
+  align-items: center;
   text-align: center;
 }
 
+/* RIGHT – kosong, hanya penyeimbang */
+.header-main .right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* Logo */
 .logo-img {
-  max-height: 60px;
+  height: 60px;
+  object-fit: contain;
 }
 
 .tagline {
   font-size: 13px;
   color: #666;
+  margin-top: 4px;
   font-style: italic;
+}
+
+/* WEATHER */
+.weather {
+  font-size: 14px;
+  color: #555;
+}
+
+/* Menu button */
+.menu-btn {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+}
+
+
+/* ========== NAVIGATION ========== */
+.nav {
+  background: #ffffff;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding: 12px 0;
+}
+
+.nav-links a {
+  color: #040404;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.nav-links a:hover {
+  color: #ff0000;
 }
 
 /* =========================================================

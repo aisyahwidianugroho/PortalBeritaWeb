@@ -11,6 +11,18 @@ $getCat = mysqli_query($conn, "SELECT nama_kategori FROM categories WHERE id = $
 $cat = mysqli_fetch_assoc($getCat);
 $namaKategori = $cat ? $cat['nama_kategori'] : 'News';
 
+// FEATURED ARTICLE (paling baru)
+$featured = mysqli_query($conn, "
+    SELECT * FROM articles
+    WHERE id_kategori = $id_kategori
+    AND status = 'published'
+    ORDER BY tanggal_publish DESC
+    LIMIT 1
+");
+
+$feat = mysqli_fetch_assoc($featured);
+
+
 // Ambil artikel sesuai kategori
 $q = mysqli_query($conn, "
     SELECT * FROM articles 
@@ -29,31 +41,36 @@ $q = mysqli_query($conn, "
 </head>
 <body>
 
-<!-- Header -->
 <header class="header">
-    <div class="header-top">SEPTEMBER 15, 2025</div>
+    <div class="header-top"><?= strtoupper(date("F d, Y")); ?></div>
 
     <div class="header-main">
+
+        <!-- LEFT -->
         <div class="left">
             <button class="menu-btn">☰</button>
-            <div class="weather">☀ 38° Surabaya</div>
+            <div class="weather">☀ <?= date("H") <= 17 ? "34°" : "28°"; ?> Surabaya</div>
         </div>
 
+        <!-- CENTER -->
         <div class="center">
             <img src="Gambar/logo-berita.png" class="logo-img">
             <p class="tagline">PORTAL BERITA TERPERCAYA UNTUK SURABAYA</p>
         </div>
 
+        <!-- RIGHT -->
         <div class="right">
-            <span>👤</span>
+            <i class="fa fa-user" style="font-size:20px;color:#444;"></i>
         </div>
+
     </div>
 </header>
+
 
 <!-- NAVIGATION -->
 <nav class="nav">
     <ul class="nav-links">
-        <li><a href="kategori.php?id=1">News</a></li>
+        <li><a href="home.php">News</a></li>
         <li><a href="kategori.php?id=2">Economy</a></li>
         <li><a href="kategori.php?id=3">Lifestyle</a></li>
         <li><a href="kategori.php?id=4">Culture</a></li>
@@ -66,13 +83,29 @@ $q = mysqli_query($conn, "
 <main>
 
     <!-- OPTIONAL: FEATURED ARTICLE MASIH STATIS (NANTI BISA AKU BUATKAN DINAMIS JUGA) -->
-    <section class="featured-article">
-        <div class="featured-image">
-            <img src="Gambar/guru-besar.jpg" alt="">
-        </div>
-        <h2>Resmi Jadi Guru Besar, Prof Hufron Singgung Pemakzulan...</h2>
-        <p>Universitas 17 Agustus 1945 (Untag) Surabaya mencatat sejarah penting...</p>
-    </section>
+
+        <?php if ($feat): ?>
+        <section class="featured-article">
+            <div class="featured-image">
+                <a href="detail-isi-berita.php?id=<?= $feat['id']; ?>">
+                    <img src="<?= $feat['gambar_sampul']; ?>" alt="cover">
+                </a>
+            </div>
+
+            <h2>
+                <a href="detail-isi-berita.php?id=<?= $feat['id']; ?>">
+                    <?= htmlspecialchars($feat['judul']); ?>
+                </a>
+            </h2>
+
+            <p><?= substr($feat['konten'], 0, 160); ?>...</p>
+
+            <span class="news-date">
+                <?= date("d F Y", strtotime($feat['tanggal_publish'])); ?>
+            </span>
+        </section>
+        <?php endif; ?>
+
 
     <!-- LIST ARTIKEL DINAMIS -->
     <section class="latest-news">

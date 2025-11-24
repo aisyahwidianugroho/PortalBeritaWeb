@@ -47,34 +47,32 @@ $komen = mysqli_query($conn, "
     <div class="header-top"><?= strtoupper(date("F d, Y")); ?></div>
 
     <div class="header-main">
+
+        <!-- LEFT AREA -->
         <div class="left">
             <button class="menu-btn">☰</button>
-
-            <div class="dropdown-menu">
-                <a href="kategori.php?id=1">News</a>
-                <a href="kategori.php?id=2">Economy</a>
-                <a href="kategori.php?id=3">Lifestyle</a>
-                <a href="kategori.php?id=4">Culture</a>
-                <a href="kategori.php?id=5">Sports</a>
-                <a href="kategori.php?id=6">World</a>
-                <a href="kategori.php?id=7">Fashion</a>
+            <div class="weather">
+                ☀ <?= date("H") <= 17 ? "34°" : "28°"; ?> Surabaya
             </div>
-
-            <div class="weather">☀ 38° Surabaya</div>
         </div>
 
+        <!-- CENTER LOGO -->
         <div class="center">
             <img src="Gambar/logo-berita.png" class="logo-img">
             <p class="tagline">PORTAL BERITA TERPERCAYA UNTUK SURABAYA</p>
         </div>
 
-        <div class="right"><span>👤</span></div>
+        <!-- RIGHT (DUMMY AGAR CENTER BALANCE) -->
+        <div class="right">
+            <span class="header-space"></span>
+        </div>
+
     </div>
 </header>
 
 <nav class="nav">
     <ul class="nav-links">
-        <li><a href="kategori.php?id=1">News</a></li>
+        <li><a href="home.php">News</a></li>
         <li><a href="kategori.php?id=2">Economy</a></li>
         <li><a href="kategori.php?id=3">Lifestyle</a></li>
         <li><a href="kategori.php?id=4">Culture</a></li>
