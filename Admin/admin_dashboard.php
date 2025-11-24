@@ -145,7 +145,55 @@ $menu = $_GET['menu'] ?? 'dashboard';
 
 <?php endif; ?>
 
+<!-- ========================== RIWAYAT PUBLISH ========================== -->
+<?php if ($menu == 'riwayat'): ?>
 
+<section class="card dashboard-section">
+    <h2 class="section-title">Riwayat Publish</h2>
+
+    <?php 
+    // Query Riwayat Publish
+    $riwayat = mysqli_query($conn, "
+        SELECT a.*, u.nama_lengkap, c.nama_kategori
+        FROM articles a
+        LEFT JOIN users u ON a.id_penulis = u.id
+        LEFT JOIN categories c ON a.id_kategori = c.id
+        WHERE a.status = 'published'
+        ORDER BY a.tanggal_publish DESC
+    ");
+    ?>
+
+    <?php if ($riwayat && mysqli_num_rows($riwayat) > 0): ?>
+
+    <table class="table-berita">
+        <thead>
+            <tr>
+                <th>Judul</th>
+                <th>Kategori</th>
+                <th>Penulis</th>
+                <th>Tanggal Publish</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        <?php while($r = mysqli_fetch_assoc($riwayat)): ?>
+            <tr>
+                <td><?= htmlspecialchars($r['judul']) ?></td>
+                <td><?= htmlspecialchars($r['nama_kategori']) ?></td>
+                <td><?= htmlspecialchars($r['nama_lengkap']) ?></td>
+                <td><?= date('d M Y H:i', strtotime($r['tanggal_publish'])) ?></td>
+            </tr>
+        <?php endwhile; ?>
+        </tbody>
+    </table>
+
+    <?php else: ?>
+        <p>Tidak ada artikel yang sudah dipublish.</p>
+    <?php endif; ?>
+
+</section>
+
+<?php endif; ?>
 
 <!-- ========================== DASHBOARD ADMIN ========================== -->
 <?php
