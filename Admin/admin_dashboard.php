@@ -13,6 +13,7 @@ $nama = $_SESSION['nama'] ?? 'Admin';
 $menu = $_GET['menu'] ?? 'dashboard';
 ?>
 
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -109,6 +110,14 @@ $menu = $_GET['menu'] ?? 'dashboard';
                 <th>Penulis</th>
                 <th>Tanggal</th>
                 <th>Aksi</th>
+                <td>
+                    <a href="hapus_riwayat.php?id=<?= $row['id']; ?>" 
+                    onclick="return confirm('Yakin ingin menghapus artikel ini?')"
+                    class="btn btn-danger btn-sm">
+                    Hapus
+                    </a>
+                </td>
+
             </tr>
         </thead>
 
@@ -152,9 +161,8 @@ $menu = $_GET['menu'] ?? 'dashboard';
     <h2 class="section-title">Riwayat Publish</h2>
 
     <?php 
-    // Query Riwayat Publish
     $riwayat = mysqli_query($conn, "
-        SELECT a.*, u.nama_lengkap, c.nama_kategori
+        SELECT a.id, a.judul, c.nama_kategori, u.nama_lengkap, a.tanggal_publish
         FROM articles a
         LEFT JOIN users u ON a.id_penulis = u.id
         LEFT JOIN categories c ON a.id_kategori = c.id
@@ -172,6 +180,7 @@ $menu = $_GET['menu'] ?? 'dashboard';
                 <th>Kategori</th>
                 <th>Penulis</th>
                 <th>Tanggal Publish</th>
+                <th>Aksi</th>
             </tr>
         </thead>
 
@@ -182,6 +191,14 @@ $menu = $_GET['menu'] ?? 'dashboard';
                 <td><?= htmlspecialchars($r['nama_kategori']) ?></td>
                 <td><?= htmlspecialchars($r['nama_lengkap']) ?></td>
                 <td><?= date('d M Y H:i', strtotime($r['tanggal_publish'])) ?></td>
+
+                <td>
+                    <a href="hapus_riwayat.php?id=<?= $r['id']; ?>"
+                       class="btn btn-danger btn-sm"
+                       onclick="return confirm('Yakin ingin menghapus artikel ini?')">
+                       Hapus
+                    </a>
+                </td>
             </tr>
         <?php endwhile; ?>
         </tbody>
@@ -194,6 +211,7 @@ $menu = $_GET['menu'] ?? 'dashboard';
 </section>
 
 <?php endif; ?>
+
 
 <!-- ========================== DASHBOARD ADMIN ========================== -->
 <?php
