@@ -89,10 +89,9 @@ $komen = mysqli_query($conn, "
 
         <p class="date"><?= date("d F Y H:i", strtotime($data['tanggal_dibuat'])) ?></p>
 
-        <p><?= nl2br(htmlspecialchars($data['konten'])) ?></p>
-
         <img src="<?= $data['gambar_sampul'] ?>" alt="Gambar Artikel">
 
+        <p><?= nl2br(htmlspecialchars($data['konten'])) ?></p>
         <p><?= nl2br(htmlspecialchars($data['konten2'])) ?></p>
     </article>
 
