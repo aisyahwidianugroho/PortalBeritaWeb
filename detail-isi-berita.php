@@ -193,6 +193,6 @@ $komen = mysqli_query($conn, "
     </div>
 </footer>
 
-
+<?php require_once __DIR__ . "/rating_widget.php"; ?>
 </body>
 </html>
