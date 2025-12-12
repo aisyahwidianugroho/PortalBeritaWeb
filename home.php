@@ -1,6 +1,5 @@
 <?php
 include "koneksi.php";
-
 //
 // ======================================================
 // 1. AMBIL FEATURED ARTIKEL (TERBARU)
@@ -97,7 +96,6 @@ $sidebar_culture = mysqli_query($conn,"
 
     <div class="header-main">
         <div class="left">
-            <button class="menu-btn">☰</button>
             <div class="weather">☀ <?= date("H") <= 17 ? "34°" : "28°" ?> Surabaya</div>
         </div>
 

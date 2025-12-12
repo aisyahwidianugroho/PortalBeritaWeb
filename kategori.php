@@ -49,7 +49,6 @@ $q = mysqli_query($conn, "
 
         <!-- LEFT -->
         <div class="left">
-            <button class="menu-btn">☰</button>
             <div class="weather">☀ <?= date("H") <= 17 ? "34°" : "28°"; ?> Surabaya</div>
         </div>
 

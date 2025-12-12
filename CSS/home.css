@@ -493,3 +493,29 @@ ul {
     color: white;
     font-size: 18px;
 }
+
+/* ===== Responsive (Mobile) ===== */
+@media (max-width: 768px) {
+  .header-main{
+    grid-template-columns: 1fr;
+    gap: 8px;
+    text-align: center;
+  }
+  .header-main .left{ justify-content: center; }
+  .nav-links{
+    flex-wrap: wrap;
+    gap: 14px;
+  }
+
+  .main-container{
+    flex-direction: column;   /* konten + sidebar jadi bawah */
+  }
+
+  .top3-container{
+    grid-template-columns: 1fr; /* top3 jadi 1 kolom */
+  }
+
+  .articles-grid{
+    grid-template-columns: 1fr; /* grid jadi 1 kolom */
+  }
+}
