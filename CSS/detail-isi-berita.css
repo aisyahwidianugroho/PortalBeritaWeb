@@ -448,3 +448,177 @@ h2 {
   font-size: 12px;
   color: #777;
 }
+/* ============================================================
+   MOBILE DETAIL BERITA — CLEAN & FINAL VERSION (ONE BLOCK ONLY)
+   ============================================================ */
+@media (max-width: 600px){
+
+    body{
+        background: #fafafa !important;
+        overflow-x: hidden !important;
+    }
+
+    /* ============================
+       1. PAKSA WRAPPER JADI 1 KOLOM
+       ============================ */
+    main,
+    .main,
+    .content-wrapper,
+    .artikel-komentar-container {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        gap: 0 !important;
+    }
+
+    /* ============================
+       2. KONTEN ARTIKEL (LEFT)
+       ============================ */
+    .berita-detail,
+    .artikel,
+    .left-content {
+        width: 100% !important;
+        padding: 16px !important;
+        box-sizing: border-box !important;
+    }
+
+    .berita-detail img{
+        width: 100% !important;
+        height: auto !important;
+        border-radius: 12px !important;
+        margin: 12px 0 !important;
+    }
+
+    .berita-detail h1{
+        font-size: 22px !important;
+        font-weight: 700 !important;
+        line-height: 1.35 !important;
+        margin: 10px 0 !important;
+    }
+
+    .berita-detail p{
+        font-size: 15px !important;
+        line-height: 1.55 !important;
+        margin-bottom: 14px !important;
+        text-align: justify !important;
+    }
+
+    .kategori-tag{
+        font-size: 11px !important;
+        padding: 4px 8px !important;
+        display: inline-block;
+        margin-bottom: 8px !important;
+    }
+
+    /* ============================
+       3. KOMENTAR (AUTO TURUN)
+       ============================ */
+    .comment-box,
+    .komentar,
+    .comment-section,
+    .right-content {
+        width: 100% !important;
+        order: 2 !important;
+        background: #fff !important;
+        padding: 16px !important;
+        border-radius: 12px !important;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.08) !important;
+        margin-top: 20px !important;
+        box-sizing: border-box !important;
+    }
+
+    .comment-box input,
+    .comment-box textarea{
+        width: 100% !important;
+        border-radius: 8px !important;
+        padding: 8px !important;
+        font-size: 14px !important;
+        box-sizing: border-box !important;
+    }
+
+    .comment-box button{
+        width: 100% !important;
+        padding: 10px !important;
+        margin-top: 8px;
+    }
+
+    /* ============================
+       4. FIND MORE DI PALING BAWAH
+       ============================ */
+    .find-more {
+        width: 100% !important;
+        order: 3 !important;
+        padding: 16px !important;
+        margin-top: 26px !important;
+        box-sizing: border-box !important;
+    }
+
+    .find-more h2{
+        font-size: 18px !important;
+        font-weight: 700 !important;
+        margin-bottom: 12px !important;
+    }
+
+    .find-more .card{
+        margin-bottom: 14px !important;
+        border-radius: 12px !important;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+}
+/* ============================================================
+   FIX PALING AKURAT UNTUK MEMAKSA 1 KOLOM DI MOBILE
+   ============================================================ */
+@media (max-width: 600px){
+
+    /* PAKSA SEMUA CONTAINER FLEX MENJADI VERTICAL */
+    main,
+    .main,
+    .content,
+    .content-wrapper,
+    .artikel-komentar-container,
+    .isi-berita-container,
+    .detail-wrapper,
+    .row,
+    .article-row {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        gap: 0 !important;
+    }
+
+    /* ARTIKEL FULL WIDTH */
+    .left-content,
+    .berita-detail,
+    .artikel {
+        width: 100% !important;
+        order: 1 !important;
+        padding: 16px !important;
+        box-sizing: border-box !important;
+    }
+
+    /* KOMENTAR JADI DI BAWAH ARTIKEL */
+    .right-content,
+    .comment-box,
+    .komentar,
+    .comment-section {
+        width: 100% !important;
+        order: 2 !important;
+        padding: 16px !important;
+        box-sizing: border-box !important;
+        margin-top: 20px !important;
+    }
+
+    /* FIND MORE DI PALING BAWAH */
+    .find-more,
+    .find-more-container {
+        width: 100% !important;
+        order: 3 !important;
+        padding: 16px !important;
+        margin-top: 20px !important;
+        box-sizing: border-box !important;
+    }
+}
+
+

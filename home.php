@@ -81,6 +81,7 @@ $sidebar_culture = mysqli_query($conn,"
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Surabaya iNews</title>
@@ -96,7 +97,6 @@ $sidebar_culture = mysqli_query($conn,"
 
     <div class="header-main">
         <div class="left">
-            <button class="menu-btn">☰</button>
             <div class="weather">☀ <?= date("H") <= 17 ? "34°" : "28°" ?> Surabaya</div>
         </div>
 
@@ -106,6 +106,13 @@ $sidebar_culture = mysqli_query($conn,"
         </div>
     </div>
 </header>
+<!-- MOBILE SEARCH BAR (HANYA MOBILE) -->
+<div class="mobile-search">
+    <div class="search-box-mobile">
+        <input type="text" placeholder="Search..." class="search-input">
+        <button class="search-btn"><i class="fa fa-search"></i></button>
+    </div>
+</div>
 
 
 <!-- NAVIGATION -->
@@ -146,8 +153,6 @@ $sidebar_culture = mysqli_query($conn,"
     </article>
     <?php endif; ?>
 
-
-
     <!-- TOP 3 -->
     <div class="top3-container">
         <?php while($t = mysqli_fetch_assoc($top3)): ?>
@@ -163,8 +168,6 @@ $sidebar_culture = mysqli_query($conn,"
         </article>
         <?php endwhile; ?>
     </div>
-
-
 
     <!-- GRID ARTICLES -->
     <div class="articles-grid">
@@ -278,4 +281,27 @@ $sidebar_culture = mysqli_query($conn,"
 </footer>
 
 </body>
+<script>
+  const menuBtn = document.getElementById("menuBtn");
+  const mobileNav = document.getElementById("mobileNav");
+  const navClose = document.getElementById("navClose");
+
+  if (menuBtn && mobileNav) {
+    menuBtn.addEventListener("click", () => {
+      mobileNav.classList.add("open");
+    });
+  }
+
+  if (navClose && mobileNav) {
+    navClose.addEventListener("click", () => {
+      mobileNav.classList.remove("open");
+    });
+  }
+
+  // Optional: klik link langsung nutup nav
+  document.querySelectorAll("#mobileNav a").forEach(a => {
+    a.addEventListener("click", () => mobileNav.classList.remove("open"));
+  });
+</script>
+
 </html>
