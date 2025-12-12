@@ -1,0 +1,20 @@
+/* ===== BASE GLOBAL (PAKAI DI SEMUA HALAMAN) ===== */
+*,
+*::before,
+*::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { font-size: 16px; }
+
+body{
+  font-family: Arial, sans-serif !important;
+  font-size: 14px !important;
+  line-height: 1.6;
+  color: #222;
+  background: #f9f9f9;
+}
+
+h1,h2,h3,h4{
+  font-family: inherit;
+  color:#111;
+  line-height: 1.25;
+}

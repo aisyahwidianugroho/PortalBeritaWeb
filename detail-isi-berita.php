@@ -39,6 +39,7 @@ $komen = mysqli_query($conn, "
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title><?= htmlspecialchars($data['judul']) ?></title>
+  <link rel="stylesheet" href="CSS/base.css">
   <link rel="stylesheet" href="CSS/detail-isi-berita.css">
 </head>
 <body>
@@ -168,7 +169,7 @@ $komen = mysqli_query($conn, "
         <div class="footer-links">
             <h4>QUICK LINKS</h4>
             <ul>
-                <li><a href="kategori.php?id=1">News</a></li>
+                <li><a href="kategori.php?id=1">Home</a></li>
                 <li><a href="kategori.php?id=2">Economy</a></li>
                 <li><a href="kategori.php?id=3">Lifestyle</a></li>
                 <li><a href="kategori.php?id=4">Culture</a></li>
