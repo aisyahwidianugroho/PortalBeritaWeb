@@ -37,6 +37,7 @@ $q = mysqli_query($conn, "
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $namaKategori ?> - theSurabaya iNews</title>
+    <link rel="stylesheet" href="CSS/base.css">
     <link rel="stylesheet" href="CSS/Kategori_news.css">
 </head>
 <body>
@@ -48,7 +49,6 @@ $q = mysqli_query($conn, "
 
         <!-- LEFT -->
         <div class="left">
-            <button class="menu-btn">☰</button>
             <div class="weather">☀ <?= date("H") <= 17 ? "34°" : "28°"; ?> Surabaya</div>
         </div>
 
@@ -70,7 +70,7 @@ $q = mysqli_query($conn, "
 <!-- NAVIGATION -->
 <nav class="nav">
     <ul class="nav-links">
-        <li><a href="home.php">News</a></li>
+        <li><a href="home.php">Home</a></li>
         <li><a href="kategori.php?id=2">Economy</a></li>
         <li><a href="kategori.php?id=3">Lifestyle</a></li>
         <li><a href="kategori.php?id=4">Culture</a></li>
@@ -154,7 +154,7 @@ $q = mysqli_query($conn, "
         <div class="footer-links">
             <h4>QUICK LINKS</h4>
             <ul>
-                <li><a href="kategori.php?id=1">News</a></li>
+                <li><a href="kategori.php?id=1">Home</a></li>
                 <li><a href="kategori.php?id=2">Economy</a></li>
                 <li><a href="kategori.php?id=3">Lifestyle</a></li>
                 <li><a href="kategori.php?id=4">Culture</a></li>

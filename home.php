@@ -1,6 +1,5 @@
 <?php
 include "koneksi.php";
-
 //
 // ======================================================
 // 1. AMBIL FEATURED ARTIKEL (TERBARU)
@@ -85,6 +84,7 @@ $sidebar_culture = mysqli_query($conn,"
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Surabaya iNews</title>
+<link rel="stylesheet" href="CSS/base.css">
 <link rel="stylesheet" href="CSS/home.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
@@ -127,8 +127,6 @@ $sidebar_culture = mysqli_query($conn,"
         <li><a href="kategori.php?id=9">Fashion</a></li>
     </ul>
 </nav>
-
-
 
 <!-- MAIN WRAPPER -->
 <div class="main-container">
@@ -192,18 +190,22 @@ $sidebar_culture = mysqli_query($conn,"
 
 </main>
 
-
-
 <!-- SIDEBAR -->
 <aside class="sidebar">
 
-<div class="search-box">
-    <input type="text" class="search-input" placeholder="Search...">
-
-    <button class="search-btn">
+<form class="search-box" action="search.php" method="GET">
+    <input
+      type="text"
+      class="search-input"
+      name="q"
+      placeholder="Cari berita..."
+      autocomplete="off"
+      required
+    >
+    <button class="search-btn" type="submit" aria-label="Cari">
         <i class="fa fa-search"></i>
     </button>
-</div>
+</form>
 
     <!-- ECONOMY -->
     <div class="news-section">
@@ -216,7 +218,6 @@ $sidebar_culture = mysqli_query($conn,"
         <?php endwhile; ?>
     </div>
 
-
     <!-- LIFESTYLE -->
     <div class="news-section">
         <h2 class="section-title">Lifestyle</h2>
@@ -227,7 +228,6 @@ $sidebar_culture = mysqli_query($conn,"
         </div>
         <?php endwhile; ?>
     </div>
-
 
     <!-- CULTURE -->
     <div class="news-section">
@@ -242,8 +242,6 @@ $sidebar_culture = mysqli_query($conn,"
 
 </aside>
 </div>
-
-
 
 <!-- FOOTER -->
 <footer class="footer">
