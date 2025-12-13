@@ -51,7 +51,6 @@ $komen = mysqli_query($conn, "
 
         <!-- LEFT AREA -->
         <div class="left">
-            <button class="menu-btn">☰</button>
             <div class="weather">
                 ☀ <?= date("H") <= 17 ? "34°" : "28°"; ?> Surabaya
             </div>
@@ -73,7 +72,7 @@ $komen = mysqli_query($conn, "
 
 <nav class="nav">
     <ul class="nav-links">
-        <li><a href="home.php">News</a></li>
+        <li><a href="home.php">Home</a></li>
         <li><a href="kategori.php?id=2">Economy</a></li>
         <li><a href="kategori.php?id=3">Lifestyle</a></li>
         <li><a href="kategori.php?id=4">Culture</a></li>
