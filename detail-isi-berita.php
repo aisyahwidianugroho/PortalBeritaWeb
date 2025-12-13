@@ -84,7 +84,9 @@ $komen = mysqli_query($conn, "
 
 <main>
     <article class="content">
-        <p class="tag"><?= strtoupper($data['nama_kategori']) ?></p>
+        <span class="category-tag">
+            <?= strtoupper($data['nama_kategori']) ?>
+        </span>
         <h2><?= htmlspecialchars($data['judul']) ?></h2>
 
         <p class="date"><?= date("d F Y H:i", strtotime($data['tanggal_dibuat'])) ?></p>
