@@ -85,25 +85,41 @@ $q = mysqli_query($conn, "
     <!-- OPTIONAL: FEATURED ARTICLE MASIH STATIS (NANTI BISA AKU BUATKAN DINAMIS JUGA) -->
 
         <?php if ($feat): ?>
-        <section class="featured-article">
-            <div class="featured-image">
-                <a href="detail-isi-berita.php?id=<?= $feat['id']; ?>">
-                    <img src="<?= $feat['gambar_sampul']; ?>" alt="cover">
-                </a>
-            </div>
+        <!-- FEATURED ARTICLE -->
+        <div class="featured-article-wrapper">
+            <section class="featured-article">
 
-            <h2>
-                <a href="detail-isi-berita.php?id=<?= $feat['id']; ?>">
-                    <?= htmlspecialchars($feat['judul']); ?>
-                </a>
-            </h2>
+                <div class="featured-image">
+                    <a href="detail-isi-berita.php?id=<?= $feat['id']; ?>">
+                        <img src="<?= $feat['gambar_sampul']; ?>" alt="cover">
+                    </a>
+                </div>
 
-            <p><?= substr($feat['konten'], 0, 160); ?>...</p>
+                <?php if ($feat): ?>
+                    <!-- TAG KATEGORI -->
+                    <span class="category-tag">
+                        <?= strtoupper($namaKategori); ?>
+                    </span>
 
-            <span class="news-date">
-                <?= date("d F Y", strtotime($feat['tanggal_publish'])); ?>
-            </span>
-        </section>
+                    <!-- JUDUL -->
+                    <h2>
+                        <a href="detail-isi-berita.php?id=<?= $feat['id']; ?>">
+                            <?= htmlspecialchars($feat['judul']); ?>
+                        </a>
+                    </h2>
+
+                    <!-- EXCERPT -->
+                    <p><?= substr($feat['konten'], 0, 160); ?>...</p>
+
+                    <!-- TANGGAL -->
+                    <span class="news-date">
+                        <?= date("d F Y", strtotime($feat['tanggal_publish'])); ?>
+                    </span>
+                <?php endif; ?>
+
+            </section>
+        </div>
+
         <?php endif; ?>
 
 

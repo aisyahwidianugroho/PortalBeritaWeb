@@ -228,7 +228,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['submit_rating'])) {
 
 <div id="tsRatingModalWrap" aria-hidden="true">
   <div id="tsRatingModal" role="dialog" aria-modal="true" aria-label="Form rating website">
-    <span id="tsRatingClose" onclick="tsRatingClose()">✕</span>
 
     <div style="position:relative;text-align:left;margin-bottom:12px">
       <div class="tsBadge">⭐ Feedback</div>

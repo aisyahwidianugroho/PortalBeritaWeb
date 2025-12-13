@@ -106,14 +106,6 @@ $sidebar_culture = mysqli_query($conn,"
         </div>
     </div>
 </header>
-<!-- MOBILE SEARCH BAR (HANYA MOBILE) -->
-<div class="mobile-search">
-    <div class="search-box-mobile">
-        <input type="text" placeholder="Search..." class="search-input">
-        <button class="search-btn"><i class="fa fa-search"></i></button>
-    </div>
-</div>
-
 
 <!-- NAVIGATION -->
 <nav class="nav">
